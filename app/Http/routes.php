@@ -12,7 +12,7 @@
 */
 Route::get('/checkstatus', function() {
 
-   echo getenv('APP_ENV'));
+   echo getenv('APP_ENV');
 
 });
 
