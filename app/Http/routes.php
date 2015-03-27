@@ -12,7 +12,11 @@
 */
 Route::get('/checkstatus', function() {
 
-   echo getenv('APP_ENV');
+   $env = $app->detectEnvironment(function() {
+
+      return getenv('APP_ENV') ?: 'LOCAL';
+
+   });
 
 });
 
