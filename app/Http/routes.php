@@ -10,6 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/checkstatus', function() {
+
+    die(getenv('APP_ENV'));
+
+});
 
 Route::get('/', 'WelcomeController@index');
 
