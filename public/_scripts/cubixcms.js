@@ -98,6 +98,8 @@
 
 $(document).ready(function() {
 
+    var maxHeight = -1;
+
     $('.store-panel').each(function () {
 
 
