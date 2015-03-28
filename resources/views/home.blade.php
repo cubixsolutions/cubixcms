@@ -2,6 +2,5 @@
 
 @section('content')
 
-{{die('welcome')}}
 
 @stop

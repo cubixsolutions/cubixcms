@@ -4,28 +4,29 @@ class pageController extends Controller {
 
     public function __construct() {
 
+        //
 
     }
 
-    public function index($slug = 'home') {
+    /**
+     * @param string $page
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index($page = 'home') {
 
 
-        $this->page($slug);
+        if(view()->exists($page)) {
+
+            return view($page);
+
+        } else {
+
+            abort(404);
+
+        }
+
     }
 
-    public function page($slug) {
-
-
-       if(view()->exists($slug)) {
-
-           return view($slug);
-
-       } else {
-
-           abort(404);
-
-       }
-
-    }
 
 }

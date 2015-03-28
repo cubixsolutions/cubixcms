@@ -14,7 +14,7 @@
     use Illuminate\Support\Facades\Route;
 
     Route::get('/', 'pageController@index');
-    Route::get('/page/{slug}', 'pageController@page');
+    Route::get('/page/{page}', 'pageController@index');
 
     Route::controllers([
         'auth' => 'Auth\AuthController',
