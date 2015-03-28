@@ -34,6 +34,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
+                {!!Html::image('/_assets/cubix-solutions_logo.svg',null,[],null)!!}
 				<div class="title">Be right back.</div>
 			</div>
 		</div>
