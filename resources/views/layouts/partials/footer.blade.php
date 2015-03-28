@@ -113,7 +113,7 @@
 
             <div id="copyright">
 
-                <p>Copyright &copy; {{date('Y')}} by Cubix Solutions</p>
+                <p>Copyright &copy; {{date('Y')}} by {{$title}}</p>
                 <p>Developed with <a href="https://www.jetbrains.com/phpstorm/">Php<strong>Storm</strong></a> and <a href="http://laravel.com">Laravel 5</a></p>
 
             </div>
