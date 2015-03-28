@@ -21,7 +21,7 @@
                  <div class="panel panel-default">
                  
                  	<div class="panel-body">
-                        {!!Html::image('/_assets/about_us.jpg',null,['class' => 'img-rounded'],null)!!}
+                        {!!Html::image('/_assets/about_us.jpg',null,['class' => 'img-rounded','width' => '100%'],null)!!}
                     	<p>Cubix Solutions is based in Bloomfield, New Mexico.  Cubix Solutions is a service company offering IT Services to the Four Corners area of New Mexico.  Cubix Solutions started operations in early 2014 and before that went under the name of WebBuzzDesign who offered web development and hosting services.  Since we changed names in early 2014 we have expanded our business to include PC Repair and Printing Services.</p>
                         
                         <p>Our senior Tech, Sean Pollock, who is also the owner of Cubix Solutions has had an extensive background in Computers dating back to the mid 80's when he got his first computer, a Tandy 1000 TX and spent many hours learning to program and repair computers;  In addition to being self-taught he has a degree in Information Technology and holds several industry certifications including A+ Certification.</p>
