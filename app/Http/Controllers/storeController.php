@@ -31,4 +31,28 @@ class storeController extends Controller {
 
     }
 
+    public function category(ProductCategory $category)
+    {
+
+        if($category->slug) {
+
+            $products = Product::whereCategory_id($category->id)->paginate(8);
+
+            if ( view()->exists('store.products') ) {
+
+                return view('store.products', array('category' => $category->category, 'products' => $products));
+
+            } else {
+
+                abort(404);
+            }
+
+        } else {
+
+            abort(404);
+
+        }
+
+    }
+
 }

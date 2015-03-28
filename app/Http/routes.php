@@ -13,8 +13,17 @@
 
     use Illuminate\Support\Facades\Route;
 
+    Route::bind('category', function($slug) {
+
+       return App\ProductCategory::whereSlug($slug)->first();
+
+    });
+
     Route::get('/', 'pageController@index');
     Route::get('/page/{page}', 'pageController@index');
+
+    Route::get('store', 'storeController@index');
+    Route::get('store/category/{category}','storeController@category');
 
     Route::controllers([
         'auth' => 'Auth\AuthController',
