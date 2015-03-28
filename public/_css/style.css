@@ -1,0 +1,289 @@
+/* CSS Document */
+
+html {
+
+    height: 100%;
+
+}
+
+body {
+
+    background: url(../_assets/texture01.png) repeat center;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+}
+
+h1, h2 {
+
+    font-family: "prenton-condensed", sans-serif !important;
+    color: #DC6F01;
+
+}
+
+nav {
+
+    font-family: "prenton-condensed", sans-serif !important;
+}
+
+nav li:hover {
+
+    background: #2D5582;
+    transition: 2s;
+}
+
+nav li {
+
+    background: inherit;
+    transition: 2s;
+}
+
+.page-wrapper {
+
+    display: table;
+    height: 100%;
+    table-layout: fixed;
+    width: 100%;
+    margin-top: 60px;
+
+}
+
+.page-footer {
+
+    height: 1px;
+    width: 100%;
+    background: #272822;
+    display: table-row;
+
+}
+
+.page-footer a {
+
+    text-decoration: none;
+    color: #1C71A4;
+}
+
+.page-footer img {
+
+    width: 200px;
+    height: auto;
+}
+
+.page-footer h1 {
+
+    font-size: 28px;
+}
+
+.page-footer p {
+
+    color: #fff;
+}
+
+.page-footer #social-media {
+
+    list-style: none;
+    padding: 0;
+}
+
+.page-footer #social-media li {
+
+    display: inline-block;
+    margin: 0px 20px 0px 0px;
+}
+
+.page-footer #bottom-links {
+
+    list-style: none;
+    padding: 0;
+
+}
+
+.page-footer #bottom-links li {
+
+    margin: 0px 10px 0px 0px;
+}
+
+.page-footer #copyright p {
+
+    line-height: auto;
+    color: #fff;
+
+}
+
+.page-footer #product_count {
+
+    line-height: 50px;
+    color: #fff;
+}
+
+.page-footer h1 {
+
+    font-size: 14px / 26px;
+}
+
+.content-divider {
+
+    margin: 20px 0px 20px 0px;
+
+}
+
+.divider {
+
+    margin: 10px 0px 10px 0px;
+    border-bottom: 1px outset rgb(100, 100, 100);
+
+}
+
+.noborder {
+
+    border: none !important;
+}
+
+.container {
+
+    padding-top: 10px;
+}
+
+.jumbotron {
+
+    background: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    margin-top: 10px;
+    position: relative;
+
+}
+
+.jumbotron .feature {
+
+    width: 400px;
+    position: absolute;
+    top: 85px;
+}
+
+.jumbotron .feature img {
+
+    position: absolute;
+    left:0;
+    top:0;
+
+}
+
+.jumbotron .feature .caption {
+
+    position: absolute;
+    width: 500px;
+    top: 10px;
+    left: 250px;
+}
+
+.desaturate {
+
+    webkit-filter: grayscale(100%);
+
+    filter: grayscale(100%);
+
+    filter: gray;
+
+    transition: 2s;
+
+}
+
+.media-body p {
+
+    color: #ffffff;
+
+}
+
+.store_panel, .store_panel h3 {
+
+    font-family: "prenton-condensed", sans-serif;
+    position: relative;
+    overflow: none;
+
+}
+
+.store-panel {
+
+    position: relative;
+
+}
+
+.store-panel .panel-body {
+
+    margin-bottom: 25px;
+}
+
+.store-panel .footer {
+
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.store-panel .product_cost {
+
+    color: rgb(200, 10, 10);
+    font-size: 18px;
+}
+
+.payment-errors {
+
+    display: none;
+
+}
+
+#backdrop {
+
+    background: url(../_assets/home_background.png) no-repeat center center;
+    width: 100%;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+
+}
+
+#backdrop .window {
+
+    width: 100%;
+    height: auto;
+    -moz-border-radius: 35px;
+    -webkit-border-radius: 35px;
+    border-radius: 35px;
+    background: rgba(57, 56, 56, 0.5);
+    border: 20px solid rgba(79, 78, 78, 0.25);
+    margin-bottom: 20px;
+    padding: 10px;
+    color: #ffffff;
+
+}
+
+#backdrop .window p {
+
+    font-family: "prenton-condensed", sans-serif;
+    text-align: center;
+    font-size: 32px;
+    font-size: 3.2vw;
+}
+
+#shopping_cart {
+
+    width: 100%;
+
+}
+
+#cart_count {
+
+    margin-left: 10px;
+}
+
+#shopping_cart thead {
+
+    background: #000;
+    color: #ffffff;
+
+}
+
