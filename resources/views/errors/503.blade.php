@@ -35,7 +35,7 @@
 <body>
 <div class="container">
     <div class="content">
-        {!!Html::image('/_assets/cubix-solutions_logo.jpg',null,[],null)!!}
+        {!!Html::image('/_assets/cubix-solutions_logo_black.svg',null,[],null)!!}
         <div class="title">We are currently updating our website.<br/>Be right back.</div>
     </div>
 </div>
