@@ -23,6 +23,9 @@
 
                     <div class="panel-body">
 
+                        <p>
+                        {!!Html::image('/_assets/privacy-policy.jpg',null,['class' => 'img-rounded'],null)!!}
+                        </p>
                         <p>This privacy policy sets out how {{$title}} uses and protects any information that you
                             give {{$title}} when you use this website.</p>
 
