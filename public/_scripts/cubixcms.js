@@ -23,6 +23,12 @@
 
         $scope.isRelatedProduct = true;
 
+        $scope.backLink = function() {
+
+            window.history.back();
+
+        };
+
         $scope.update = function($prod_id) {
 
             var link = $("#addToCart_form").attr("action") + "/" + $prod_id;
