@@ -9,6 +9,7 @@ class pageController extends Controller {
 
     public function index($slug = 'home') {
 
+        die('slug: ' . $slug);
         $this->page($slug);
     }
 
