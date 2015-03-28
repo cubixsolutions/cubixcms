@@ -15,7 +15,6 @@
 
     });
 
-    app.value('cubixcms','angularPayments');
     app.controller('shoppingCart', ['$scope', '$http', function($scope,$http) {
 
         $scope.cart = {};
@@ -85,7 +84,7 @@
 
             if(status == '404') {
 
-                alert('Page Not Found');
+                //alert('Page Not Found');
 
             }
         });
@@ -93,62 +92,6 @@
 
     }]);
 
-    app.controller('CartController', function($scope) {
-
-       //alert('welcome to my store');
-        console.log(cubixcms.cart);
-
-        $(".placard").on('accept.fu.placard', this, function (e) {
-
-            // What happens with a discount code is entered and accepted
-
-            var url = $(this).parent().attr('action');
-
-            cubixcms.cart[$(this).find('.cart_id').val()].qty = $(this).find('.placard-field').val();
-            cubixcms.cart[$(this).find('.cart_id').val()].subtotal = cubixcms.cart[$(this).find('.cart_id').val()].price * cubixcms.cart[$(this).find('.cart_id').val()].qty;
-            console.log(cubixcms.cart);
-            //console.log($(this).find(".cart_id").val());
-
-            //alert($(this).find('.placard-field').val())
-            var request = $.ajax({
-
-                type: "post",
-                url: "http://localhost:8000/" + url,
-                dataType: "json",
-                data: {
-
-                    '_token': $(this).find('._token').val(),
-                    'cart': cubixcms.cart,
-                    'rowId': $(this).find('.cart_id').val(),
-                    'qty': $(this).find('.placard-field').val()
-                }
-
-
-            });
-
-            request.done(function (msg) {
-
-                $("#subtotal").html(msg.subtotal);
-
-                $.growl({
-
-                    title: '<strong>System Message</strong>',
-                    message: '<p>' + msg.msg + '</p>',
-
-                }, {
-
-                    type: 'success'
-
-                });
-
-            });
-
-        });
-
-
-    });
-
-})();
 
 $(document).ready(function () {
 
