@@ -92,4 +92,20 @@
 
     }]);
 
+    $('.store-panel').each(function () {
+
+
+        maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+
+    });
+
+    $('.store-panel').each(function () {
+
+        $(this).height(maxHeight+50);
+
+    });
+
+    $('.store-panel').matchHeight({property: 'min-height'});
+    $('.store-panel').find('.thumbnail').matchHeight(true);
+
 }(jQuery));
