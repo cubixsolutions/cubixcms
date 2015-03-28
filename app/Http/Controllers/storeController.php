@@ -7,6 +7,8 @@ use App\ProductCategory;
 use App\ProductType;
 use App\User;
 
+use Cart,Hash,Mail,Auth,Validator;
+
 class storeController extends Controller {
 
     public function __construct() {
@@ -52,6 +54,16 @@ class storeController extends Controller {
             abort(404);
 
         }
+
+    }
+
+    public function refreshCart() {
+
+        $cart = Cart::content();
+        $subtotal = Cart::total();
+        $count = Cart::count();
+
+        return response()->json(['cart' => $cart, 'subtotal' => $subtotal, 'count' => $count]);
 
     }
 
