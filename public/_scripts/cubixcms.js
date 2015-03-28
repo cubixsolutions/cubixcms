@@ -15,6 +15,24 @@
 
     });
 
+    app.directive('backButton', ['$window', function($window) {
+
+       return {
+
+           restrict: 'A',
+
+           link: function(scope, element, attrs) {
+
+               element.bind('click', function () {
+
+                    $window.history.back();
+
+               });
+           }
+       };
+
+    }]);
+
     app.controller('shoppingCart', ['$scope', '$http', function($scope,$http) {
 
         $scope.cart = {};
@@ -22,12 +40,6 @@
         $scope.cart.count = 0;
 
         $scope.isRelatedProduct = true;
-
-        $scope.backLink = function() {
-
-            window.history.back();
-
-        };
 
         $scope.update = function($prod_id) {
 

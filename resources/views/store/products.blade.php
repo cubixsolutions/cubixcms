@@ -18,7 +18,7 @@
 
 				<div class="panel-heading">
 
-					<strong><a href="#" target="_self" ng-click="backLink"><span class="fa fa-arrow-circle-left"></span> Section: </strong> {{$category}}</a>
+					<strong><a href="#" target="_self" back-button><span class="fa fa-arrow-circle-left"></span> Section: </strong> {{$category}}</a>
 
 				</div>
 
