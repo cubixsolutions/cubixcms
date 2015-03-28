@@ -92,6 +92,12 @@
 
     }]);
 
+
+
+}(jQuery));
+
+$(document).ready(function() {
+
     $('.store-panel').each(function () {
 
 
@@ -108,4 +114,5 @@
     $('.store-panel').matchHeight({property: 'min-height'});
     $('.store-panel').find('.thumbnail').matchHeight(true);
 
-}(jQuery));
+
+});
