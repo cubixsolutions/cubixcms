@@ -1,5 +1,7 @@
 ## Cubix Solutions CMS
 
+<span style="color: red">Note:  This software is in no way complete.  Please do not download</span>
+
 Cubix Solutions CMS or CubixCMS is a complete content management solution designed for web developers and support technicians.
 
 CubixCMS has been built on top of Laravel 5 and is closely tide into the Stripe payment gateway.
