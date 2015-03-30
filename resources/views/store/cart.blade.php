@@ -29,7 +29,7 @@
 
                                 <tr>
 
-                                    <th>Product Name</th><th>Unit Price</th><th>Quantity</th><th>Subtotal</th>
+                                    <th colspan="3">Product Name</th><th>Unit Price</th><th>Quantity</th><th>Subtotal</th>
 
                                 </tr>
 
@@ -37,7 +37,7 @@
                             <tfoot>
 
                                 <tr>
-                                    <td colspan="3"><a class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a class="btn btn-primary btn-sm" {{(Cart::count() > 0)?:"disabled"}}>Update Shopping Cart</a></td>
+                                    <td colspan="4"><a class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a class="btn btn-primary btn-sm" {{(Cart::count() > 0)?:"disabled"}}>Update Shopping Cart</a></td>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -47,6 +47,8 @@
 
                                     <tr>
 
+                                        <td class="deleteRec"></td>
+                                        <td class="image"></td>
                                         <td>$row->product</td>
                                         <td>$row->qty</td>
                                         <td>$row->price</td>
@@ -64,7 +66,29 @@
 
                         </table>
 
+                        <div class="row">
 
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="well">
+
+                                    <h3>Discount Code</h3>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <div class="well">
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                 </div>
 
