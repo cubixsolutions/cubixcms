@@ -57,6 +57,22 @@ class storeController extends Controller {
 
     }
 
+    public function viewCart() {
+
+        $cart = Cart::content();
+
+        if (view()->exists('store.cart')) {
+
+            return view('store.cart', array('cart'  => $cart));
+
+        } else {
+
+            abort(404);
+
+        }
+
+    }
+
     public function refreshCart() {
 
         $cart = Cart::content();

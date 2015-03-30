@@ -25,6 +25,7 @@
     Route::get('store', 'storeController@index');
     Route::get('store/category/{category}','storeController@category');
     Route::get('store/refresh-cart','storeController@refreshCart');
+    Route::get('store/view-cart','storeController@viewCart');
 
     Route::controllers([
         'auth' => 'Auth\AuthController',
