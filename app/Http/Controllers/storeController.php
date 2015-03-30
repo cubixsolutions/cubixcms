@@ -57,6 +57,22 @@ class storeController extends Controller {
 
     }
 
+    public function addCart($id) {
+
+        $product = Product::find($id);
+
+        $sku = $product->sku;
+        $name = $product->product;
+        $price = $product->price;
+
+        Cart::associate('Product','App')->add($sku,$name, 1, $price);
+
+        $cart = Cart::content();
+
+        return response()->json(['sku' => $sku, 'cart' => $cart, 'count' => Cart::count(), 'subtotal' => Cart::total()]);
+
+    }
+
     public function viewCart() {
 
         $cart = Cart::content();
@@ -80,6 +96,29 @@ class storeController extends Controller {
         $count = Cart::count();
 
         return response()->json(['cart' => $cart, 'subtotal' => $subtotal, 'count' => $count]);
+
+    }
+
+    public function updateCart(Request $request) {
+
+        $cart = Cart::content();
+
+        $rowId = $request->input('rowId');
+        $qty = $request->input('qty');
+
+        if($qty == 0) {
+
+            Cart::remove($rowId);
+
+        } else {
+
+            Cart::update($rowId, array('qty' => $qty));
+
+        }
+
+        $subtotal = Cart::total();
+
+        return response()->json(['msg' => 'Shopping Cart Updated!', 'subtotal' => $subtotal]);
 
     }
 

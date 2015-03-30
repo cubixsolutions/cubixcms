@@ -44,9 +44,12 @@
         $scope.update = function($prod_id) {
 
             var link = $("#addToCart_form").attr("action") + "/" + $prod_id;
+
             $http({
+
                 method: 'POST',
                 url: link
+
             }).success(function (data, status, headers, config) {
 
                 $scope.cart = data.cart;
@@ -57,7 +60,7 @@
                 $.growl({
 
                     title: '<strong>Shopping Cart</strong>',
-                    message: '<p>Item <code>' + data.sku + '</code> has been saved to shopping cart</p>',
+                    message: '<p>Item <code>' + data.sku + '</code> has been saved to shopping cart</p>'
 
                 }, {
 
@@ -70,6 +73,16 @@
 
             }).error(function (data, status, headers, config) {
 
+                $.growl({
+
+                    title: '<strong>Error</strong>',
+                    message: '<p>Failed adding item to shopping cart.</p>'
+
+                }, {
+
+                    type: 'error'
+
+                });
 
             });
 

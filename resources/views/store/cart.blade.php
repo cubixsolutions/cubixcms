@@ -47,11 +47,12 @@
 
                                     <tr>
 
-                                        <td class="deleteRec"></td>
+                                        <td class="deleteRec"><span class=""</td>
                                         <td class="image"></td>
-                                        <td>$row->product</td>
-                                        <td>$row->qty</td>
-                                        <td>$row->price</td>
+                                        <td>{{$row->name}}</td>
+                                        <td>{{$row->price}}</td>
+                                        <td>{{$row->qty}}</td>
+                                        <td>{{$row->price * $row->qty}}</td>
 
                                     </tr>
 
