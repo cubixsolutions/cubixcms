@@ -22,7 +22,7 @@
 
                 <div class="panel-body">
 
-
+                    @if(Cart::count() > 0)
                         <table class="table table-responsive table-condensed">
 
                             <thead>
@@ -42,7 +42,6 @@
                             </tfoot>
                             <tbody>
 
-                            @if(Cart::count() > 0)
                                 @foreach($cart as $row)
 
                                     <tr>
@@ -57,11 +56,6 @@
                                     </tr>
 
                                 @endforeach
-                            @else
-
-                                <td><i>Cart is Empty</i></td>
-
-                            @endif
 
                             </tbody>
 
@@ -90,7 +84,12 @@
                             </div>
 
                         </div>
+                    @else
 
+                        <h1>Shopping Cart is Empty</h1>
+                        <p>You have no items in your shopping cart.</p>
+                        <p>Click <a href="#">here</a> to continue shopping.</p>
+                    @endif
                 </div>
 
             </div>
