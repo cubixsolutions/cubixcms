@@ -1,8 +1,8 @@
-<?php namespace App\Http\Controllers\Webhooks\Stripe;
+<?php namespace Laravel\Cashier\WebhookController;
 
 use App\Http\Controllers\Controller;
 
-class stripeWebhookController extends Laravel\Cashier\WebhookController {
+class stripeWebhookController extends Controller {
 
     public function handleInvoicePaymentSucceeded($payload)
     {
