@@ -29,11 +29,12 @@
     Route::post('store/add-cart/{id}','storeController@addCart');
     Route::post('store/update-cart','storeController@updateCart');
 
+    Route::post('webhooks','Laravel\Cashier\WebhookController@handleWebhook');
+
     //Route::post('webhooks','Laravel\Cashier\WebhookController@handleWebhook');
 
     Route::controllers([
         'auth' => 'Auth\AuthController',
-        'password' => 'Auth\PasswordController',
-        'webhook'   => 'Webhooks\StripeWebhookController',
+        'password' => 'Auth\PasswordController'
 
     ]);
