@@ -32,4 +32,6 @@
     Route::controllers([
         'auth' => 'Auth\AuthController',
         'password' => 'Auth\PasswordController',
+        'webhooks' => 'Webhooks\Stripe\stripeWebhookController'
+
     ]);
