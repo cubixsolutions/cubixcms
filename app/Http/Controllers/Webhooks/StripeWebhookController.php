@@ -1,6 +1,6 @@
-<?php
+<?php namespace Laravel\Cashier;
 
-class StripeWebhookController extends Laravel\Cashier\WebhookController {
+class StripeWebhookController extends WebhookController {
 
     /*
     |--------------------------------------------------------------------------
