@@ -29,7 +29,12 @@
     Route::post('store/add-cart/{id}','storeController@addCart');
     Route::post('store/update-cart','storeController@updateCart');
 
-    Route::post('webhooks', 'Webhooks\StripeWebhookController@handleWebhook');
+    Route::post('webhooks', function() {
+
+        dd('success');
+
+
+    });
 
     //Route::post('webhooks','Laravel\Cashier\WebhookController@handleWebhook');
 
