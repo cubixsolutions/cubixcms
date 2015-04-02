@@ -138,8 +138,6 @@ return [
 		'Illuminate\View\ViewServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
-        'MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider',
-        'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -150,6 +148,8 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
         'App\Providers\ComposerServiceProvider',
+        'MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider',
+        'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
 
 	],
 
