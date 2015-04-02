@@ -22,13 +22,13 @@ class StripeWebhookController extends WebhookController {
     public function handleWebhook()
     {
         $payload = $this->getJsonPayload();
-        return $payload['id'];
+
         if (! $this->eventExistsOnStripe($payload['id'])) {
             return;
         }
 
         $method = 'handle'.studly_case(str_replace('.', '_', $payload['type']));
-
+        return $method;
         if (method_exists($this, $method)) {
             return $this->{$method}($payload);
         } else {
