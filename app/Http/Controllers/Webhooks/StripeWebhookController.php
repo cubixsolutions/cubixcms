@@ -1,7 +1,8 @@
 <?php namespace App\Http\Controllers\Webhooks;
 
 use Laravel\Cashier\WebhookController;
-use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Request;
+use Symfony\Component\HttpFoundation\Response;
 class StripeWebhookController extends WebhookController {
 
     /*
