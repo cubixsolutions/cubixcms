@@ -44,7 +44,7 @@ class StripeWebhookController extends WebhookController {
      */
     protected function eventExistsOnStripe($id)
     {
-        return Config::get('services.stripe.secret');
+        return 'hello';
 
         try {
             return ! is_null(Stripe_Event::retrieve($id, Config::get('services.stripe.secret')));
