@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Webhooks;
 
-use Laravel\Cashier;
+use Laravel\Cashier\WebhookController;
 
 class StripeWebhookController extends WebhookController {
 
