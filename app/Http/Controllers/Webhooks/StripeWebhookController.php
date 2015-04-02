@@ -15,10 +15,10 @@ class StripeWebhookController extends WebhookController {
     |
     */
 
-    public function handleWebhook()
+    public function handleWebhook($payload)
     {
 
-        return "success";
+        dd($payload);
 
     }
 
