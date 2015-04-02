@@ -24,4 +24,9 @@ class StripeWebhookController extends WebhookController {
 
     }
 
+    protected function getJsonPayload()
+    {
+        return (array) json_decode(Request::getContent(), true);
+    }
+
 }
