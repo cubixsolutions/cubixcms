@@ -12,7 +12,7 @@
     */
 
     use Illuminate\Support\Facades\Route;
-    use Cashier;
+
     Route::bind('category', function($slug) {
 
        return App\ProductCategory::whereSlug($slug)->first();
