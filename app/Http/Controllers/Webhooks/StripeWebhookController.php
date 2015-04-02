@@ -52,7 +52,7 @@ class StripeWebhookController extends WebhookController {
     }
 
 
-    protected function handleInvoicePaymentSucceeded($payload)
+    public function handleInvoicePaymentSucceeded($payload)
     {
 
         return new Response('Webhook Handled', 200);
