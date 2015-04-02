@@ -138,6 +138,8 @@ return [
 		'Illuminate\View\ViewServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+        'MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider',
+        'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
 
 		/*
 		 * Application Service Providers...
