@@ -28,7 +28,7 @@ class StripeWebhookController extends WebhookController {
         }
 
         $method = 'handle'.studly_case(str_replace('.', '_', $payload['type']));
-        return 'hello';
+
         if (method_exists($this, $method)) {
             return $this->{$method}($payload);
         } else {
@@ -44,6 +44,8 @@ class StripeWebhookController extends WebhookController {
      */
     protected function eventExistsOnStripe($id)
     {
+        return Config::get('services.stripe.secret');
+
         try {
             return ! is_null(Stripe_Event::retrieve($id, Config::get('services.stripe.secret')));
         } catch (Exception $e) {
