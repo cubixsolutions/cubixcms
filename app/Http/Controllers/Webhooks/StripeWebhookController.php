@@ -28,7 +28,7 @@ class StripeWebhookController extends WebhookController {
         }
 
         $method = 'handle'.studly_case(str_replace('.', '_', $payload['type']));
-        return $method;
+        return 'hello';
         if (method_exists($this, $method)) {
             return $this->{$method}($payload);
         } else {
