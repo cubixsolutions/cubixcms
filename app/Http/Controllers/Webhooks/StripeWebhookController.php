@@ -51,12 +51,20 @@ class StripeWebhookController extends WebhookController {
         }
     }
 
+
+    protected function handleInvoicePaymentSucceeded($payload)
+    {
+
+        return new Response('Webhook Handled', 200);
+
+    }
     /**
      * Handle a cancelled customer from a Stripe subscription.
      *
      * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
+
     protected function handleCustomerSubscriptionDeleted(array $payload)
     {
         $billable = $this->getBillable($payload['data']['object']['customer']);
