@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 
-class StripeWebhookController extends Controller {
+class StripeWebhookController extends Laravel\Cashier\WebhookController {
 
     /*
     |--------------------------------------------------------------------------
