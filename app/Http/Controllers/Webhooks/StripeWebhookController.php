@@ -44,7 +44,7 @@ class StripeWebhookController extends WebhookController {
      */
     protected function eventExistsOnStripe($id)
     {
-        dd('welcome');
+        dd($id);
     }
 
 
