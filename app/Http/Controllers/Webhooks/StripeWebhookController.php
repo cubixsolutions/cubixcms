@@ -1,4 +1,4 @@
-<?php namespace Laravel\Cashier;
+<?php namespace App\Http\Controllers\Webhooks;
 
 use Config;
 use Exception;
