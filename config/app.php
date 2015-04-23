@@ -150,6 +150,7 @@ return [
         'App\Providers\ComposerServiceProvider',
         'MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider',
         'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
 	],
 

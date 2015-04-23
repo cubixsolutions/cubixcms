@@ -23,7 +23,7 @@
                 <div class="panel-body">
 
                     @if(Cart::count() > 0)
-                        <table class="table table-responsive table-condensed">
+                        <table class="table table-responsive table-condensed" ng-controller="shoppingCart">
 
                             <thead>
 
