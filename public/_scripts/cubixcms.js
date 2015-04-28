@@ -41,6 +41,8 @@
 
         $scope.isRelatedProduct = true;
 
+
+
         $scope.update = function($prod_id) {
 
             var link = $("#addToCart_form").attr("action") + "/" + $prod_id;
@@ -107,7 +109,7 @@
 
             //console.log(data.cart);
             $scope.cart = data.cart;
-            $scope.cart.subtotal = data.subtotal;
+            $scope.cart.total = data.total;
             $scope.cart.count = data.count;
             console.log($scope.cart.count);
 

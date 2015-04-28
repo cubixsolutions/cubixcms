@@ -23,7 +23,7 @@
                 <div class="panel-body">
 
                     @if(Cart::count() > 0)
-                        <table class="table table-responsive table-condensed" ng-controller="shoppingCart">
+                        <table class="table table-responsive table-condensed">
 
                             <thead>
 
@@ -42,48 +42,27 @@
                             </tfoot>
                             <tbody>
 
-                                @foreach($cart as $row)
+                            <tr ng-repeat="cartItem in cart">
 
-                                    <tr>
+                                <td colspan="3"><% cartItem.name %></td>
+                                <td><% cartItem.price %></td>
+                                <td><% cartItem.qty %></td>
+                                <td><% cartItem.subtotal %></td>
 
-                                        <td class="deleteRec"><span class=""</td>
-                                        <td class="image"></td>
-                                        <td>{{$row->name}}</td>
-                                        <td>{{$row->price}}</td>
-                                        <td>{{$row->qty}}</td>
-                                        <td>{{$row->price * $row->qty}}</td>
 
-                                    </tr>
+                            </tr>
 
-                                @endforeach
+                            <tr style="border-top: 1px solid #eee;">
 
+                                <td colspan="4"></td>
+                                <td align="right">Total:</td>
+                                <td><strong><% cart.total %></strong></td>
+                            </tr>
                             </tbody>
 
                         </table>
 
-                        <div class="row">
 
-                            <div class="col-md-4">
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="well">
-
-                                    <h3>Discount Code</h3>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-4">
-
-                                <div class="well">
-
-                                </div>
-
-                            </div>
-
-                        </div>
                     @else
 
                         <h1>Shopping Cart is Empty</h1>

@@ -194,7 +194,11 @@ nav li {
     color: #ffffff;
 
 }
+.store_panel {
 
+    height: auto !important;
+
+}
 .store_panel, .store_panel h3 {
 
     font-family: "prenton-condensed", sans-serif;

@@ -92,10 +92,10 @@ class storeController extends Controller {
     public function refreshCart() {
 
         $cart = Cart::content();
-        $subtotal = Cart::total();
+        $total = Cart::total();
         $count = Cart::count();
 
-        return response()->json(['cart' => $cart, 'subtotal' => $subtotal, 'count' => $count]);
+        return response()->json(['cart' => $cart, 'total' => $total, 'count' => $count]);
 
     }
 
