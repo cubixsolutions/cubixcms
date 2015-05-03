@@ -44,40 +44,59 @@
 
                                                     <p><a href="/store/view/{{$product->id}}" target="_self"><h3>{{$product->product}}</h3></a></p>
 
-                                                    <p>{{str_limit($product->description,200)}}</p>
+                                                    <div class="alert alert-description" style="height: 100px;">
+
+                                                        <div class="description">
+
+                                                            <span class="ellipsis_text">
+
+                                                                {{$product->description}}
+
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
 
                                                 </div>
 
                                             </div>
-                                                    @if($product->price != "")
-                                                        <p>Cost: <span class="product_cost">${{$product->price}}</span></p>
-                                                        @if($product->type->product_type == "Product")
 
-                                                            <!-- addToCart Form -->
 
-                                                            {!! Form::open(['url'	=> '/store/add-cart','id'	=> 'addToCart_form']) !!}
+                                        </div>
 
-                                                            <!-- addCartLink Button -->
-                                                            <div class="form-group">
+                                        <div class="panel-footer">
 
-                                                                {!! Form::button( 'Add to Cart', ['product_id' => $product->id,'class' => 'btn btn-primary','ng-click' => 'update('.$product->id.')']) !!}
+                                            @if($product->price != "")
+                                                <p>Cost: <span class="product_cost">${{$product->price}}</span></p>
+                                                @if($product->type->product_type == "Product")
 
-                                                            </div>
+                                                    <!-- addToCart Form -->
 
-                                                            {!! Form::close() !!}
+                                                    {!! Form::open(['url'	=> '/store/add-cart','id'	=> 'addToCart_form']) !!}
 
-                                                        @else
+                                                    <!-- addCartLink Button -->
+                                                    <div class="form-group">
 
-                                                            <a href="/services/book-technician" class="btn btn-primary">Book Technician</a>
+                                                        {!! Form::button( 'Add to Cart', ['product_id' => $product->id,'class' => 'btn btn-primary','ng-click' => 'update('.$product->id.')']) !!}
+                                                        {!! Form::button( 'Info', ['product_id' => $product->id,'class' => 'btn btn-primary', 'title' => $product->product, 'data-placement' => 'top', 'data-toggle' => 'popover', 'data-content' => $product->description]) !!}
+                                                    </div>
 
-                                                        @endif
+                                                    {!! Form::close() !!}
 
-                                                    @else
+                                                @else
 
-                                                        <p>Cost: <span class="product_cost">Call</span></p>
-                                                        <a href="/contact-us" target="_self" class="btn btn-info">Call us for a free consultation</a>
+                                                    <a href="/services/book-technician" class="btn btn-primary panel-block">Book Technician</a>
 
-                                                    @endif
+                                                @endif
+
+                                            @else
+
+                                                <p>Cost: <span class="product_cost">Call</span></p>
+                                                <a href="/contact-us" target="_self" class="btn btn-info btn-block">Call us for a free consultation</a>
+
+                                            @endif
+
 
                                         </div>
 
@@ -122,5 +141,11 @@
 
 
 </div>
+
+@stop
+
+@section('footer')
+
+    <script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
 
 @stop

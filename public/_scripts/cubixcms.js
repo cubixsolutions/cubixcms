@@ -109,9 +109,9 @@
 
             //console.log(data.cart);
             $scope.cart = data.cart;
-            $scope.cart.total = data.total;
-            $scope.cart.count = data.count;
-            console.log($scope.cart.count);
+            $scope.cart_total = data.total;
+            //$scope.cart.count = data.count;
+            //console.log($scope.cart.count);
 
         }).error(function (data, status, headers, config) {
 
@@ -131,6 +131,7 @@
 
 $(document).ready(function() {
 
+    /*
     var maxHeight = -1;
 
     $('.store-panel').each(function () {
@@ -148,6 +149,7 @@ $(document).ready(function() {
 
     $('.store-panel').matchHeight({property: 'min-height'});
     $('.store-panel').find('.thumbnail').matchHeight(true);
-
-
+*/
+    $('[data-toggle="popover"]').popover();
+    $('.description').ThreeDots({max_rows:4});
 });

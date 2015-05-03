@@ -199,6 +199,19 @@ nav li {
     height: auto !important;
 
 }
+
+.description .ellipsis_text {
+
+    height: 100px;
+
+}
+
+.alert-description {
+
+    background: #dde4e6;
+
+}
+
 .store_panel, .store_panel h3 {
 
     font-family: "prenton-condensed", sans-serif;

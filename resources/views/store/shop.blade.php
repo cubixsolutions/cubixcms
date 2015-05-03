@@ -38,15 +38,35 @@
                                             <div class="caption">
 
                                                 <h3>{{$category->category}}</h3>
-                                                <p>{{$category->description}}</p>
+
+                                                <div class="alert alert-description" style="height: 100px;">
+
+                                                    <div class="description">
+
+                                                        <span class="ellipsis_text">
+
+                                                            {{$category->description}}
+
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+
 
                                             </div>
 
                                         </div>
 
-                                        <a href="/store/category/{{$category->slug}}" target="_self" class="btn btn-primary">Shop</a>
 
 									</div>
+
+                                    <div class="panel-footer">
+
+                                        <a href="/store/category/{{$category->slug}}" target="_self" class="btn btn-primary">Shop</a>
+                                        <a class="btn btn-primary" title="{{$category->category}}" data-placement="top" data-toggle="popover" data-content="{{$category->description}}">Info</a>
+
+                                    </div>
 
 								</div>
 							
@@ -68,5 +88,12 @@
 
 
 </div>
+
+@stop
+
+@section('footer')
+
+<script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
+
 
 @stop

@@ -46,9 +46,8 @@
 
                                 <td colspan="3"><% cartItem.name %></td>
                                 <td><% cartItem.price %></td>
-                                <td><% cartItem.qty %></td>
+                                <td><input ng-model="cartItem.qty" /></td>
                                 <td><% cartItem.subtotal %></td>
-
 
                             </tr>
 
@@ -56,7 +55,7 @@
 
                                 <td colspan="4"></td>
                                 <td align="right">Total:</td>
-                                <td><strong><% cart.total %></strong></td>
+                                <td><strong><% cart_total %></strong></td>
                             </tr>
                             </tbody>
 
