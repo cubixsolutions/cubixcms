@@ -37,8 +37,9 @@
                             <tfoot>
 
                                 <tr>
-                                    <td colspan="4"><a class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a class="btn btn-primary btn-sm" {{(Cart::count() > 0)?:"disabled"}}>Update Shopping Cart</a></td>
+                                    <td colspan="4"><a class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a class="btn btn-primary btn-sm" ng-click="update()" {{(Cart::count() > 0)?:"disabled"}}>Update Shopping Cart</a></td>
                                 </tr>
+
                             </tfoot>
                             <tbody>
 
@@ -46,8 +47,15 @@
 
                                 <td colspan="3"><% cartItem.name %></td>
                                 <td><% cartItem.price %></td>
-                                <td><input ng-model="cartItem.qty" /></td>
-                                <td><% cartItem.subtotal %></td>
+                                <td>
+
+                                    <!-- ToDo:  Add Qty Field -->
+                                    <% cartItem.qty %>
+
+                                </td>
+
+                                <td><% cartItem.subtotal %>
+                                <p><a class="btn btn-primary btn-xs" ng-click="remove(cartItem.rowid)">Remove</a></p></td>
 
                             </tr>
 

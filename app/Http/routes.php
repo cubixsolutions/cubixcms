@@ -28,6 +28,7 @@
     Route::get('store/view-cart','storeController@viewCart');
     Route::post('store/add-cart/{id}','storeController@addCart');
     Route::post('store/update-cart','storeController@updateCart');
+    Route::post('store/remove-cart','storeController@removeCart');
 
     Route::post('webhooks', 'Webhooks\StripeWebhookController@handleWebhook');
 

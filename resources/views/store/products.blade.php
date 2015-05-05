@@ -44,20 +44,6 @@
 
                                                     <p><a href="/store/view/{{$product->id}}" target="_self"><h3>{{$product->product}}</h3></a></p>
 
-                                                    <div class="alert alert-description" style="height: 100px;">
-
-                                                        <div class="description">
-
-                                                            <span class="ellipsis_text">
-
-                                                                {{$product->description}}
-
-                                                            </span>
-
-                                                        </div>
-
-                                                    </div>
-
                                                 </div>
 
                                             </div>
@@ -68,7 +54,7 @@
                                         <div class="panel-footer">
 
                                             @if($product->price != "")
-                                                <p>Cost: <span class="product_cost">${{$product->price}}</span></p>
+                                                <p><span class="product_cost">${{$product->price}}</span></p>
                                                 @if($product->type->product_type == "Product")
 
                                                     <!-- addToCart Form -->
@@ -78,8 +64,9 @@
                                                     <!-- addCartLink Button -->
                                                     <div class="form-group">
 
-                                                        {!! Form::button( 'Add to Cart', ['product_id' => $product->id,'class' => 'btn btn-primary','ng-click' => 'update('.$product->id.')']) !!}
-                                                        {!! Form::button( 'Info', ['product_id' => $product->id,'class' => 'btn btn-primary', 'title' => $product->product, 'data-placement' => 'top', 'data-toggle' => 'popover', 'data-content' => $product->description]) !!}
+                                                        <a class="btn btn-success" ng-click="update({{$product->id}})"><i class="fa fa-shopping-cart"> </i> Add to Cart</a>
+                                                        <a class="btn btn-primary" title="{{$product->product}}" product_id="{{$product->id}}" data-placement="top" data-toggle="popover" data-content="{{$product->description}}"><i class="fa fa-exclamation-circle"></i> More Info</a>
+
                                                     </div>
 
                                                     {!! Form::close() !!}
@@ -92,7 +79,7 @@
 
                                             @else
 
-                                                <p>Cost: <span class="product_cost">Call</span></p>
+                                                <p><span class="product_cost">Call</span></p>
                                                 <a href="/contact-us" target="_self" class="btn btn-info btn-block">Call us for a free consultation</a>
 
                                             @endif

@@ -7,7 +7,7 @@ use App\ProductCategory;
 use App\ProductType;
 use App\User;
 
-use Cart,Hash,Mail,Auth,Validator;
+use Cart,Hash,Mail,Auth,Validator,Request;
 
 class storeController extends Controller {
 
@@ -54,6 +54,20 @@ class storeController extends Controller {
             abort(404);
 
         }
+
+    }
+
+    public function removeCart() {
+
+        $rowid = Request::input('rowid');
+        $cartItem = Cart::get($rowid);
+        $sku = $cartItem->id;
+
+        Cart::remove($rowid);
+        $cart = Cart::content();
+
+        return response()->json(['sku' => $sku, 'cart' => $cart, 'count' => Cart::count(), 'subtotal' => Cart::total()]);
+
 
     }
 

@@ -30,7 +30,7 @@
     <script src="/_scripts/angular-payments.js"></script>
 
     <script src="/_scripts/jquery.matchHeight.js"></script>
-
+    <script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
     <script src='/_scripts/cubixcms.js'></script>
 
     @yield("head")
@@ -87,7 +87,7 @@
             @endif
             <p class="navbar-text pull-right">
                 <a href="/store/view-cart" class="navbar-link"><i class="fa fa-shopping-cart"></i> View Cart</a> <span
-                        id="cart_count" class="badge ng-clock" ng-cloak><% cart.count %></span>
+                        id="cart_count" class="badge ng-clock" ng-cloak><% cart_count %></span>
             </p>
 
         </div>

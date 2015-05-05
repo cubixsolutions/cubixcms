@@ -63,8 +63,8 @@
 
                                     <div class="panel-footer">
 
-                                        <a href="/store/category/{{$category->slug}}" target="_self" class="btn btn-primary">Shop</a>
-                                        <a class="btn btn-primary" title="{{$category->category}}" data-placement="top" data-toggle="popover" data-content="{{$category->description}}">Info</a>
+                                        <a href="/store/category/{{$category->slug}}" target="_self" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Shop</a>
+                                        <a class="btn btn-primary" title="{{$category->category}}" data-placement="top" data-toggle="popover" data-content="{{$category->description}}"><i class="fa fa-exclamation-circle"></i> More Info</a>
 
                                     </div>
 
