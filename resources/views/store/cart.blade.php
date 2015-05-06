@@ -22,14 +22,20 @@
 
                 <div class="panel-body">
 
-                    @if(Cart::count() > 0)
-                        <table class="table table-responsive table-condensed">
+
+                        <div ng-if="cart_count == 0">
+                            <h1>Shopping Cart is Empty</h1>
+                            <p>You have no items in your shopping cart.</p>
+                            <p>Click <a href="#">here</a> to continue shopping.</p>
+                        </div>
+
+                        <table class="table table-responsive table-condensed" ng-if="cart_count > 0">
 
                             <thead>
 
                                 <tr>
 
-                                    <th colspan="3">Product Name</th><th>Unit Price</th><th>Quantity</th><th>Subtotal</th>
+                                    <th colspan="3">Product Name</th><th>Unit Price</th><th>Quantity</th><th>Subtotal</th><th>Actions</th>
 
                                 </tr>
 
@@ -49,13 +55,16 @@
                                 <td><% cartItem.price %></td>
                                 <td>
 
-                                    <!-- ToDo:  Add Qty Field -->
                                     <% cartItem.qty %>
 
                                 </td>
 
-                                <td><% cartItem.subtotal %>
-                                <p><a class="btn btn-primary btn-xs" ng-click="remove(cartItem.rowid)">Remove</a></p></td>
+                                <td><% cartItem.subtotal %></td>
+                                <td>
+
+                                    <input type="button" class="btn btn-danger btn-xs" ng-click="remove(cartItem.rowid, $index)" value="Remove" />
+
+                                </td>
 
                             </tr>
 
@@ -69,13 +78,6 @@
 
                         </table>
 
-
-                    @else
-
-                        <h1>Shopping Cart is Empty</h1>
-                        <p>You have no items in your shopping cart.</p>
-                        <p>Click <a href="#">here</a> to continue shopping.</p>
-                    @endif
                 </div>
 
             </div>

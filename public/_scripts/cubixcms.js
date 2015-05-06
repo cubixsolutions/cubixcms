@@ -35,16 +35,15 @@
 
     app.controller('shoppingCart', ['$scope', '$http', function($scope,$http) {
 
-        $scope.cart = {};
+        $scope.cart = [];
         $scope.cart.subtotal = '0.00';
         $scope.cart_count = 0;
-
+        $scope.isRemoved = false;
         $scope.isRelatedProduct = true;
 
+        $scope.remove = function($rowid,index) {
 
-        $scope.remove = function($rowid) {
-
-            //alert('Row ID: ' + $rowid);
+            //alert('Index: ' + $index);
 
             $http({
 
@@ -57,20 +56,31 @@
 
             }).success(function (data, status, headers, config) {
 
+
+
                 $scope.cart = data.cart;
+                console.log($scope.cart);
+
+                // TODO: remove row from table
+
+                //$scope.cart.splice(index, 1);
                 $scope.cart.subtotal = data.subtotal;
                 $scope.cart_total = data.subtotal;
                 $scope.isRelatedProduct = false;
                 $scope.cart_count = data.count;
-
+                //alert('done');
                 $.growl({
 
-                    title: '<strong>Shopping Cart</strong>',
+                    title: ' <strong>Shopping Cart</strong>',
                     message: '<p>Item <code>' + data.sku + '</code> has been removed from shopping cart</p>'
 
                 }, {
 
-                    type: 'info'
+                    type: 'info',
+                    placement: {
+
+                        align: 'center'
+                    }
 
                 });
 
@@ -81,12 +91,17 @@
 
                 $.growl({
 
-                    title: '<strong>Error</strong>',
+                    title: ' <strong>Error</strong>',
                     message: '<p>Failed deleting item from shopping cart.</p>'
 
                 }, {
 
-                    type: 'danger'
+                    type: 'danger',
+                    placement: {
+
+                        align: 'center'
+
+                    }
 
                 });
 
@@ -135,7 +150,12 @@
 
                 }, {
 
-                    type: 'info'
+                    type: 'info',
+                    placement: {
+
+                        align: 'center'
+
+                    }
 
                 });
 
@@ -151,7 +171,11 @@
 
                 }, {
 
-                    type: 'danger'
+                    type: 'danger',
+                    placement: {
+
+                        align: 'center'
+                    }
 
                 });
 
