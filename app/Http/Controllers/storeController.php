@@ -60,10 +60,14 @@ class storeController extends Controller {
     public function changeItemQty() {
 
         $rowid = Request::input('rowid');
+        $cartItem = Cart::get($rowid);
+        $sku = $cartItem->id;
         $qty = Request::input('qty');
 
         if ($qty > 0) {
+
             Cart::update($rowid, array('qty' => $qty));
+
         } elseif($qty <= 0) {
 
             Cart::remove($rowid);
@@ -72,9 +76,10 @@ class storeController extends Controller {
 
         $cart = Cart::content();
 
-        return response()->json(['cart' => $cart, 'count' => Cart::count(), 'subtotal' => Cart::total()]);
+        return response()->json(['sku' => $sku, 'cart' => $cart, 'count' => Cart::count(), 'subtotal' => Cart::total()]);
 
     }
+
     public function removeCart() {
 
         $rowid = Request::input('rowid');

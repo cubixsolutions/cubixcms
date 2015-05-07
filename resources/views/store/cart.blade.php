@@ -29,7 +29,8 @@
                             <p>Click <a href="{{action('storeController@index')}}">here</a> to continue shopping.</p>
                         </div>
 
-                        <table class="table table-responsive table-condensed" ng-clock ng-if="cart_count > 0">
+                    <div class="table-responsive" ng-if="cart_count > 0">
+                    <table class="table table-condensed" ng-clock ng-if="cart_count > 0">
 
                             <thead>
 
@@ -55,17 +56,17 @@
                                 <td><% cartItem.price %></td>
                                 <td>
 
-                                    <% cartItem.qty %>
+                                    <div class="badge" style="vertical-align: middle;"><% cartItem.qty %></div>
 
-                                    <a href="" ng-if="cartItem.name"  ng-click="changeQty(cartItem.qty = cartItem.qty - 1,cartItem.rowid)"><i class="fa fa-minus"></i></a>
-                                    <a href="" ng-if="cartItem.name" ng-click="changeQty(cartItem.qty = cartItem.qty + 1,cartItem.rowid)"><i class="fa fa-plus"></i></a>
+                                    <a href="#" class="btn btn-success btn-xs" data-toggle="tooltip" title="decreases quantity" ng-if="cartItem.name"  ng-click="changeQty(cartItem.qty = cartItem.qty - 1,cartItem.rowid)"><i class="fa fa-minus"></i></a>
+                                    <a href="#" class="btn btn-success btn-xs" data-toggle="tooltip" title="increases quantity" ng-if="cartItem.name" ng-click="changeQty(cartItem.qty = cartItem.qty + 1,cartItem.rowid)"><i class="fa fa-plus"></i></a>
 
                                 </td>
 
                                 <td><% cartItem.subtotal %></td>
                                 <td>
 
-                                    <input type="button" class="btn btn-danger btn-xs" ng-if="cartItem.name" ng-click="remove(cartItem.rowid, $index)" value="Remove" />
+                                    <input type="button" class="btn btn-danger btn-xs" ng-if="cartItem.name" ng-click="changeQty(0,cartItem.rowid)" value="Remove" />
 
                                 </td>
 
@@ -80,6 +81,7 @@
                             </tbody>
 
                         </table>
+                        </div>
 
                 </div>
 

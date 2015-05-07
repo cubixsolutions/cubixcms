@@ -8,6 +8,7 @@
 (function() {
 
 
+    $('[data-toggle="tooltip"]').tooltip();
     var app = angular.module('cubixcms', ['ngProgress'],function($interpolateProvider) {
 
         $interpolateProvider.startSymbol('<%');
@@ -62,20 +63,41 @@
                 $scope.cart_count = data.count;
                 $scope.cart_total = data.subtotal;
 
-                $.growl({
+                if ($indicator == 0) {
 
-                    title: ' <strong>Shopping Cart</strong>',
-                    message: '<p>Shopping cart has been updated</p>'
+                    $.growl({
 
-                }, {
+                        title: ' <strong>Shopping Cart</strong>',
+                        message: '<p>Item <code>' + data.sku + '</code> has been removed from shopping cart</p>'
 
-                    type: 'info',
-                    placement: {
+                    }, {
 
-                        align: 'center'
-                    }
+                        type: 'info',
+                        placement: {
 
-                });
+                            align: 'center'
+                        }
+
+                    });
+
+
+                } else {
+
+                    $.growl({
+
+                        title: ' <strong>Shopping Cart</strong>',
+                        message: '<p>Shopping cart has been updated</p>'
+
+                    }, {
+
+                        type: 'info',
+                        placement: {
+
+                            align: 'center'
+                        }
+
+                    });
+                }
 
             }).error(function (data, status, headers, config) {
 
@@ -99,80 +121,6 @@
 
         };
 
-        $scope.remove = function($rowid,index) {
-
-            //alert('Index: ' + index);
-
-            //$scope.cart.splice(index, 1);
-            //console.log($scope.cart);
-            $http({
-
-                method: 'POST',
-                url: '/store/remove-cart',
-                data: {
-
-                    'rowid' : $rowid
-                }
-
-            }).success(function (data, status, headers, config) {
-
-
-
-                //$scope.cart = data.cart;
-
-                $scope.cart = data.cart;
-
-                //console.log($scope.cart);
-
-                //console.log($scope.cart);
-
-                // TODO: remove row from table
-
-                //$scope.cart.splice(index, 1);
-                $scope.cart.subtotal = data.subtotal;
-                $scope.cart_total = data.subtotal;
-                $scope.isRelatedProduct = false;
-                $scope.cart_count = data.count;
-                //alert('done');
-                $.growl({
-
-                    title: ' <strong>Shopping Cart</strong>',
-                    message: '<p>Item <code>' + data.sku + '</code> has been removed from shopping cart</p>'
-
-                }, {
-
-                    type: 'info',
-                    placement: {
-
-                        align: 'center'
-                    }
-
-                });
-
-                //console.log($scope.cart.count);
-
-
-            }).error(function (data, status, headers, config) {
-
-                $.growl({
-
-                    title: ' <strong>Error</strong>',
-                    message: '<p>Failed deleting item from shopping cart.</p>'
-
-                }, {
-
-                    type: 'danger',
-                    placement: {
-
-                        align: 'center'
-
-                    }
-
-                });
-
-            });
-
-        };
 
         $scope.update = function($prod_id) {
 
@@ -310,5 +258,6 @@ $(document).ready(function() {
 */
     //$("#myQty").placard();
     $('[data-toggle="popover"]').popover();
+
     $('.description').ThreeDots({max_rows:4});
 });
