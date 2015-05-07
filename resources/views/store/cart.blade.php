@@ -23,13 +23,13 @@
                 <div class="panel-body">
 
 
-                        <div ng-if="cart_count == 0">
+                        <div ng-clock ng-if="cart_count == 0">
                             <h1>Shopping Cart is Empty</h1>
                             <p>You have no items in your shopping cart.</p>
-                            <p>Click <a href="#">here</a> to continue shopping.</p>
+                            <p>Click <a href="{{action('storeController@index')}}">here</a> to continue shopping.</p>
                         </div>
 
-                        <table class="table table-responsive table-condensed" ng-if="cart_count > 0">
+                        <table class="table table-responsive table-condensed" ng-clock ng-if="cart_count > 0">
 
                             <thead>
 
@@ -43,7 +43,7 @@
                             <tfoot>
 
                                 <tr>
-                                    <td colspan="4"><a class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a class="btn btn-primary btn-sm" ng-click="update()" {{(Cart::count() > 0)?:"disabled"}}>Update Shopping Cart</a></td>
+                                    <td colspan="4"><a href="{{action('storeController@index')}}" class="btn btn-primary btn-sm">Continue Shopping</a></td><td><a href="{{action('storeController@checkout')}}" class="btn btn-primary btn-sm" {{(Cart::count() > 0)?:"disabled"}}>Checkout</a></td>
                                 </tr>
 
                             </tfoot>
@@ -57,12 +57,15 @@
 
                                     <% cartItem.qty %>
 
+                                    <a href="" ng-if="cartItem.name"  ng-click="changeQty(cartItem.qty = cartItem.qty - 1,cartItem.rowid)"><i class="fa fa-minus"></i></a>
+                                    <a href="" ng-if="cartItem.name" ng-click="changeQty(cartItem.qty = cartItem.qty + 1,cartItem.rowid)"><i class="fa fa-plus"></i></a>
+
                                 </td>
 
                                 <td><% cartItem.subtotal %></td>
                                 <td>
 
-                                    <input type="button" class="btn btn-danger btn-xs" ng-click="remove(cartItem.rowid, $index)" value="Remove" />
+                                    <input type="button" class="btn btn-danger btn-xs" ng-if="cartItem.name" ng-click="remove(cartItem.rowid, $index)" value="Remove" />
 
                                 </td>
 

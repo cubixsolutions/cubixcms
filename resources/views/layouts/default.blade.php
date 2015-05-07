@@ -27,6 +27,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+    <script src="/_scripts/ngProgress.js"></script>
     <script src="/_scripts/angular-payments.js"></script>
 
     <script src="/_scripts/jquery.matchHeight.js"></script>

@@ -57,6 +57,24 @@ class storeController extends Controller {
 
     }
 
+    public function changeItemQty() {
+
+        $rowid = Request::input('rowid');
+        $qty = Request::input('qty');
+
+        if ($qty > 0) {
+            Cart::update($rowid, array('qty' => $qty));
+        } elseif($qty <= 0) {
+
+            Cart::remove($rowid);
+
+        }
+
+        $cart = Cart::content();
+
+        return response()->json(['cart' => $cart, 'count' => Cart::count(), 'subtotal' => Cart::total()]);
+
+    }
     public function removeCart() {
 
         $rowid = Request::input('rowid');
@@ -109,6 +127,7 @@ class storeController extends Controller {
         $total = Cart::total();
         $count = Cart::count();
 
+        //$mycart = json_decode(json_encode($cart), true);
         return response()->json(['cart' => $cart, 'total' => $total, 'count' => $count]);
 
     }
@@ -133,6 +152,24 @@ class storeController extends Controller {
         $subtotal = Cart::total();
 
         return response()->json(['msg' => 'Shopping Cart Updated!', 'subtotal' => $subtotal]);
+
+    }
+
+    public function checkout() {
+
+        // TODO: make checkout routine
+
+        $cart = Cart::content();
+
+        if(view()->exists('store.checkout')) {
+
+
+            return view('store.checkout',array('cart' => $cart));
+
+        } else {
+
+            abort('404');
+        }
 
     }
 

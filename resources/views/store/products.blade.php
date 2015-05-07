@@ -43,6 +43,7 @@
                                                 <div class="caption">
 
                                                     <p><a href="/store/view/{{$product->id}}" target="_self"><h3>{{$product->product}}</h3></a></p>
+                                                    <p>SKU: <code>{{$product->sku}}</code></p>
 
                                                 </div>
 

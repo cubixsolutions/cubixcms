@@ -26,9 +26,12 @@
     Route::get('store/category/{category}','storeController@category');
     Route::get('store/refresh-cart','storeController@refreshCart');
     Route::get('store/view-cart','storeController@viewCart');
+    Route::get('store/checkout', ['middleware' => 'nocart', 'only' => 'checkout', 'uses' => 'storeController@checkout']);
     Route::post('store/add-cart/{id}','storeController@addCart');
     Route::post('store/update-cart','storeController@updateCart');
     Route::post('store/remove-cart','storeController@removeCart');
+    Route::post('store/change-qty','storeController@changeItemQty');
+
 
     Route::post('webhooks', 'Webhooks\StripeWebhookController@handleWebhook');
 

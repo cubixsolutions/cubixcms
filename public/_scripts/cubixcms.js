@@ -8,7 +8,7 @@
 (function() {
 
 
-    var app = angular.module('cubixcms', [],function($interpolateProvider) {
+    var app = angular.module('cubixcms', ['ngProgress'],function($interpolateProvider) {
 
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
@@ -33,18 +33,78 @@
 
     }]);
 
-    app.controller('shoppingCart', ['$scope', '$http', function($scope,$http) {
+    app.controller('shoppingCart', ['$scope', '$http', 'ngProgress', function($scope,$http,ngProgress) {
 
-        $scope.cart = [];
+        $scope.cart = {};
         $scope.cart.subtotal = '0.00';
         $scope.cart_count = 0;
         $scope.isRemoved = false;
         $scope.isRelatedProduct = true;
 
+        $scope.changeQty = function($indicator,$rowid) {
+
+            //alert($indicator);
+
+            $http({
+
+                method: 'POST',
+                url: '/store/change-qty',
+                data: {
+
+                    'rowid' : $rowid,
+                    'qty'   : $indicator
+                }
+
+            }).success(function (data, status, headers, config) {
+
+
+                $scope.cart = data.cart;
+                $scope.cart_count = data.count;
+                $scope.cart_total = data.subtotal;
+
+                $.growl({
+
+                    title: ' <strong>Shopping Cart</strong>',
+                    message: '<p>Shopping cart has been updated</p>'
+
+                }, {
+
+                    type: 'info',
+                    placement: {
+
+                        align: 'center'
+                    }
+
+                });
+
+            }).error(function (data, status, headers, config) {
+
+                $.growl({
+
+                    title: ' <strong>Error</strong>',
+                    message: '<p>Failed updating shopping cart.</p>'
+
+                }, {
+
+                    type: 'danger',
+                    placement: {
+
+                        align: 'center'
+
+                    }
+
+                });
+
+            });
+
+        };
+
         $scope.remove = function($rowid,index) {
 
-            //alert('Index: ' + $index);
+            //alert('Index: ' + index);
 
+            //$scope.cart.splice(index, 1);
+            //console.log($scope.cart);
             $http({
 
                 method: 'POST',
@@ -58,8 +118,13 @@
 
 
 
+                //$scope.cart = data.cart;
+
                 $scope.cart = data.cart;
-                console.log($scope.cart);
+
+                //console.log($scope.cart);
+
+                //console.log($scope.cart);
 
                 // TODO: remove row from table
 
