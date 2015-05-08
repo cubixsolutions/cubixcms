@@ -151,6 +151,7 @@ return [
         'MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider',
         'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
 
 	],
 

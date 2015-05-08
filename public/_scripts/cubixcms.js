@@ -21,12 +21,18 @@
        return {
 
            restrict: 'A',
+           scope: {
+
+               back: '@back'
+
+           },
 
            link: function(scope, element, attrs) {
 
-               element.bind('click', function () {
+               $(element[0]).on('click', function() {
 
                     $window.history.back();
+                    scope.$apply();
 
                });
            }
@@ -35,6 +41,10 @@
     }]);
 
     app.controller('shoppingCart', ['$scope', '$http', 'ngProgress', function($scope,$http,ngProgress) {
+
+        $('[data-toggle="popover"]').popover();
+
+        $('.description').ThreeDots({max_rows:4});
 
         $scope.cart = {};
         $scope.cart.subtotal = '0.00';
@@ -75,7 +85,7 @@
                         type: 'info',
                         placement: {
 
-                            align: 'center'
+                            align: 'right'
                         }
 
                     });
@@ -93,7 +103,7 @@
                         type: 'info',
                         placement: {
 
-                            align: 'center'
+                            align: 'right'
                         }
 
                     });
@@ -111,7 +121,7 @@
                     type: 'danger',
                     placement: {
 
-                        align: 'center'
+                        align: 'right'
 
                     }
 
@@ -166,7 +176,7 @@
                     type: 'info',
                     placement: {
 
-                        align: 'center'
+                        align: 'right'
 
                     }
 
@@ -187,7 +197,7 @@
                     type: 'danger',
                     placement: {
 
-                        align: 'center'
+                        align: 'right'
                     }
 
                 });
@@ -200,6 +210,38 @@
         /**
          * function to place order
          */
+
+        $scope.create_account = function(callback) {
+
+         // TODO: Account creation function
+
+            $http({
+
+                method: 'POST',
+                url: '/store/create-account',
+                data: {
+
+                    'name' : $("#name").val(),
+                    'email' : $("#email").val(),
+                    'password' : $("#password").val(),
+                    'password_confirmation' : $("#password_confirmation").val()
+
+                }
+            }).success(function (data, status, headers, config) {
+
+
+
+            }).error(function (data, status, headers, config) {
+
+                if (status == '404') {
+
+                    alert('Page Not Found!');
+
+                }
+
+            });
+
+        };
 
         $scope.placeOrder = function() {
 
@@ -234,30 +276,3 @@
 
 
 }(jQuery));
-
-$(document).ready(function() {
-
-    /*
-    var maxHeight = -1;
-
-    $('.store-panel').each(function () {
-
-
-        maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-
-    });
-
-    $('.store-panel').each(function () {
-
-        $(this).height(maxHeight+50);
-
-    });
-
-    $('.store-panel').matchHeight({property: 'min-height'});
-    $('.store-panel').find('.thumbnail').matchHeight(true);
-*/
-    //$("#myQty").placard();
-    $('[data-toggle="popover"]').popover();
-
-    $('.description').ThreeDots({max_rows:4});
-});
