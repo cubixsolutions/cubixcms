@@ -1,5 +1,6 @@
 <?php  namespace App\Http\Controllers;
 
+use App\Commands\CreateUserAccount;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -181,11 +182,17 @@ class storeController extends Controller {
     public function createAccount(Requests\StoreUserCreateRequest $request) {
 
         // TODO:  Create Account function
-
         $name = Request::input('name');
+        $email = Request::input('email');
+        $password = Request::input('password');
 
+        $this->dispatch(new CreateUserAccount($name,$email,$password));
 
-        return response()->json(['msg' => $name]);
+        if (Auth::attempt(['email' => $email, 'password' => $password]) ) {
+
+            return response()->json(['msg' => 'Account Logged In!']);
+
+        }
 
     }
 

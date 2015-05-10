@@ -1,4 +1,4 @@
-<?php  namespace App\Commands;
+<?php namespace App\Commands;
 
 use App\Commands\Command;
 
@@ -9,21 +9,31 @@ use Mail,Hash;
 
 class CreateUserAccount extends Command implements SelfHandling {
 
+	/**
+	 * Create a new command instance.
+	 *
+	 * @return void
+	 */
+
     public $name, $email, $password;
 
-    public function __construct($name,$email,$password)
-    {
-
-        $this->name = $name;
+	public function __construct($name,$email,$password)
+	{
+		$this->name = $name;
         $this->email = $email;
         $this->password = $password;
 
-    }
+	}
 
-    public function handle()
-    {
+	/**
+	 * Execute the command.
+	 *
+	 * @return void
+	 */
 
-        $user = New User;
+	public function handle()
+	{
+		$user = new User;
 
         $user->name = $this->name;
         $user->email = $this->email;
@@ -31,16 +41,6 @@ class CreateUserAccount extends Command implements SelfHandling {
 
         $user->save();
 
-        $name = $this->name;
-        $email = $this->email;
-
-        Mail::send('emails.welcome', array('name' => $this->name), function ($message) use ($name, $email) {
-
-            $message->to($email,$name)->subject('Welcome!');
-
-
-        });
-
-    }
+	}
 
 }

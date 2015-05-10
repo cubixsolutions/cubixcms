@@ -137,6 +137,16 @@
 
                                             <div class="panel-body">
 
+                                                <div class="alert alert-danger" ng-if="session.login.error">
+
+                                                    <strong>Error!</strong><br />
+                                                    <div ng-repeat="(key, value) in session.login.error">
+
+                                                        <% value %>
+
+                                                    </div>
+
+                                                </div>
 
                                                 <form name="LoginForm" novalidate rc-submit="login()">
 
