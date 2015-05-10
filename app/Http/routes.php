@@ -32,6 +32,7 @@
     Route::post('store/remove-cart','storeController@removeCart');
     Route::post('store/change-qty','storeController@changeItemQty');
 
+    Route::post('store/create-account','storeController@createAccount');
 
     Route::post('webhooks', 'Webhooks\StripeWebhookController@handleWebhook');
 

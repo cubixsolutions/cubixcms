@@ -16,6 +16,70 @@
 
     });
 
+
+    app.directive('rcSubmit', ['$parse', function($parse) {
+
+            return {
+                restrict: 'A',
+                require: ['rcSubmit', '?form'],
+                controller: ['$scope', function ($scope) {
+                    this.attempted = false;
+
+                    var formController = null;
+
+                    this.setAttempted = function() {
+                        this.attempted = true;
+                    };
+
+                    this.setFormController = function(controller) {
+                        formController = controller;
+                    };
+
+                    this.needsAttention = function (fieldModelController) {
+                        if (!formController) return false;
+
+                        if (fieldModelController) {
+                            return fieldModelController.$invalid && (fieldModelController.$dirty || this.attempted);
+                        } else {
+                            return formController && formController.$invalid && (formController.$dirty || this.attempted);
+                        }
+                    };
+                }],
+                compile: function(cElement, cAttributes, transclude) {
+                    return {
+                        pre: function(scope, formElement, attributes, controllers) {
+
+                            var submitController = controllers[0];
+                            var formController = (controllers.length > 1) ? controllers[1] : null;
+
+                            submitController.setFormController(formController);
+
+                            scope.rc = scope.rc || {};
+                            scope.rc[attributes.name] = submitController;
+                        },
+                        post: function(scope, formElement, attributes, controllers) {
+
+                            var submitController = controllers[0];
+                            var formController = (controllers.length > 1) ? controllers[1] : null;
+                            var fn = $parse(attributes.rcSubmit);
+
+                            formElement.bind('submit', function (event) {
+                                submitController.setAttempted();
+                                if (!scope.$$phase) scope.$apply();
+
+                                if (!formController.$valid) return false;
+
+                                scope.$apply(function() {
+                                    fn(scope, {$event:event});
+                                });
+                            });
+                        }
+                    };
+                }
+            };
+
+    }]);
+
     app.directive('backButton', ['$window', function($window) {
 
        return {
@@ -40,12 +104,14 @@
 
     }]);
 
+
     app.controller('shoppingCart', ['$scope', '$http', 'ngProgress', function($scope,$http,ngProgress) {
 
         $('[data-toggle="popover"]').popover();
 
         $('.description').ThreeDots({max_rows:4});
 
+        $scope.session = {};
         $scope.cart = {};
         $scope.cart.subtotal = '0.00';
         $scope.cart_count = 0;
@@ -83,6 +149,11 @@
                     }, {
 
                         type: 'info',
+                        offset: {
+                            x: 20,
+                            y: 70
+
+                        },
                         placement: {
 
                             align: 'right'
@@ -101,6 +172,11 @@
                     }, {
 
                         type: 'info',
+                        offset: {
+                            x: 20,
+                            y: 70
+
+                        },
                         placement: {
 
                             align: 'right'
@@ -119,6 +195,11 @@
                 }, {
 
                     type: 'danger',
+                    offset: {
+                        x: 20,
+                        y: 70
+
+                    },
                     placement: {
 
                         align: 'right'
@@ -174,6 +255,11 @@
                 }, {
 
                     type: 'info',
+                    offset: {
+                        x: 20,
+                        y: 70
+
+                    },
                     placement: {
 
                         align: 'right'
@@ -195,6 +281,11 @@
                 }, {
 
                     type: 'danger',
+                    offset: {
+                        x: 20,
+                        y: 70
+
+                    },
                     placement: {
 
                         align: 'right'
@@ -207,35 +298,65 @@
 
         };
 
-        /**
-         * function to place order
-         */
+        $scope.guest_checkout = function() {
 
-        $scope.create_account = function(callback) {
+          // TODO: Guest Checkout function
+
+            alert('Feature not available!');
+
+        };
+
+        $scope.login = function() {
+
+            // TODO:  Login function
+
+            alert('logged in!');
+
+        };
+
+        $scope.create_account = function() {
 
          // TODO: Account creation function
-
+            //alert($scope.session.name);
+            $scope.session.error = {};
             $http({
 
                 method: 'POST',
                 url: '/store/create-account',
                 data: {
 
-                    'name' : $("#name").val(),
-                    'email' : $("#email").val(),
-                    'password' : $("#password").val(),
-                    'password_confirmation' : $("#password_confirmation").val()
+                    'name'                  : $scope.session.name,
+                    'email'                 : $scope.session.email,
+                    'password'              : $scope.session.password,
+                    'password_confirmation' : $scope.session.password_confirmation
 
                 }
+
             }).success(function (data, status, headers, config) {
 
-
+                    alert(data.msg);
 
             }).error(function (data, status, headers, config) {
 
-                if (status == '404') {
+                //alert(status);
+                switch(status) {
 
-                    alert('Page Not Found!');
+                    case 422:
+
+                        $scope.session.error = data;
+                        console.log($scope.session.error);
+
+                        break;
+
+                    case 404:
+
+                        alert('404 Page Not Found!');
+                        break;
+
+                    default:
+
+                        alert('Error');
+                        break;
 
                 }
 
@@ -272,7 +393,5 @@
 
 
     }]);
-
-
 
 }(jQuery));

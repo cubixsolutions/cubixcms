@@ -11,6 +11,7 @@
     <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel="stylesheet">
     <link href='/_css/themes/flatly/bootstrap.min.css' rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/_css/ionicons.css" rel="stylesheet">
     <link href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css"
           rel="stylesheet">
     <link href="/_css/fuelux.css" rel="stylesheet">

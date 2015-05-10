@@ -178,4 +178,15 @@ class storeController extends Controller {
 
     }
 
+    public function createAccount(Requests\StoreUserCreateRequest $request) {
+
+        // TODO:  Create Account function
+
+        $name = Request::input('name');
+
+
+        return response()->json(['msg' => $name]);
+
+    }
+
 }
