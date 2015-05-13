@@ -13,6 +13,7 @@ class ComposerServiceProvider extends ServiceProvider {
     public function boot( Setting $setting)
     {
 
+        /*
         $setting = $setting->all();
 
         View::composer('*', function($view) use($setting) {
@@ -25,6 +26,7 @@ class ComposerServiceProvider extends ServiceProvider {
            }
 
         });
+        */
     }
 
     /**
