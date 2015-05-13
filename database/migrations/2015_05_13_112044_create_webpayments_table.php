@@ -19,7 +19,7 @@ class CreateWebpaymentsTable extends Migration {
             $table->string('token',255);
             $table->string('amount');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+
 
         });
 	}
