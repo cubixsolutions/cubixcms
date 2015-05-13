@@ -41,4 +41,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    function webpayments()
+    {
+        return $this->hasMany('App\WebPayments');
+    }
 }
