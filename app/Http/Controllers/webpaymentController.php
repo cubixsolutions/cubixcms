@@ -14,8 +14,13 @@ class webpaymentController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($token)
 	{
+
+        $webpayment = new WebPayments;
+        $form = $webpayment->where('token', '=', $token)->firstOrFail();
+
+        dd($form);
 
         if(view()->exists('forms.webpayment')) {
 
