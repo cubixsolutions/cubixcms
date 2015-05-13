@@ -23,14 +23,14 @@
                 <div class="panel-body">
 
 
-                        <div ng-clock ng-if="cart_count == 0">
+                        <div ng-cloak ng-if="cart_count == 0">
                             <h1>Shopping Cart is Empty</h1>
                             <p>You have no items in your shopping cart.</p>
                             <p>Click <a href="{{action('storeController@index')}}">here</a> to continue shopping.</p>
                         </div>
 
-                    <div class="table-responsive" ng-if="cart_count > 0">
-                    <table class="table table-condensed" ng-clock ng-if="cart_count > 0">
+                    <div class="table-responsive" ng-cloak ng-if="cart_count > 0">
+                    <table class="table table-condensed" ng-cloak ng-if="cart_count > 0">
 
                             <thead>
 
@@ -50,7 +50,7 @@
                             </tfoot>
                             <tbody>
 
-                            <tr ng-repeat="cartItem in cart">
+                            <tr ng-cloak ng-repeat="cartItem in cart">
 
                                 <td colspan="3"><% cartItem.name %></td>
                                 <td><% cartItem.price %></td>

@@ -64,7 +64,7 @@
 
                                             <div class="panel-body">
 
-                                                <div class="alert alert-danger" ng-if="session.error">
+                                                <div class="alert alert-danger" ng-cloak ng-if="session.error">
 
                                                 	<strong>Error!</strong><br />
                                                     <div ng-repeat="(key, value) in session.error">
@@ -137,7 +137,7 @@
 
                                             <div class="panel-body">
 
-                                                <div class="alert alert-danger" ng-if="session.login.error">
+                                                <div class="alert alert-danger" ng-cloak ng-if="session.login.error">
 
                                                     <strong>Error!</strong><br />
                                                     <div ng-repeat="(key, value) in session.login.error">

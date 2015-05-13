@@ -27,6 +27,8 @@
     Route::get('store/refresh-cart','storeController@refreshCart');
     Route::get('store/view-cart','storeController@viewCart');
     Route::get('store/checkout', ['middleware' => 'nocart', 'only' => 'checkout', 'uses' => 'storeController@checkout']);
+    Route::get('webpayment', 'webpaymentController@index');
+    Route::post('webpayment/create','webpaymentController@create');
     Route::post('store/add-cart/{id}','storeController@addCart');
     Route::post('store/update-cart','storeController@updateCart');
     Route::post('store/remove-cart','storeController@removeCart');

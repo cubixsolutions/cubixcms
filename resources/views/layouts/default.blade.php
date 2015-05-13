@@ -30,6 +30,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
     <script src="/_scripts/ngProgress.js"></script>
     <script src="/_scripts/angular-payments.js"></script>
+    <script src="/_scripts/ngStorage.js"></script>
 
     <script src="/_scripts/jquery.matchHeight.js"></script>
     <script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
@@ -45,7 +46,7 @@
 
 </head>
 
-<body class="fuelux" ng-controller="shoppingCart">
+<body class="fuelux" ng-controller="shoppingCart" loadCart>
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid">

@@ -8,14 +8,27 @@
 (function() {
 
 
-    $('[data-toggle="tooltip"]').tooltip();
-    var app = angular.module('cubixcms', ['ngProgress'],function($interpolateProvider) {
+
+    var app = angular.module('cubixcms', ['ngProgress','ngStorage','angularPayments'],function($interpolateProvider) {
 
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
 
     });
 
+    app.directive('loadCart', function() {
+
+        return {
+
+            restrict: 'A',
+            controller: ['$scope', function ($scope) {
+
+                $scope.view_cart();
+
+            }]
+        }
+
+    });
 
     app.directive('rcSubmit', ['$parse', function($parse) {
 
@@ -104,8 +117,49 @@
 
     }]);
 
+    app.controller('webpaymentController', ['$scope', '$http', function($scope,$http) {
 
-    app.controller('shoppingCart', ['$scope', '$http', 'ngProgress', function($scope,$http,ngProgress) {
+        //alert('welcome');
+        $scope.paynow = function() {
+
+           Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
+
+           Stripe.card.createToken({
+               number: $('#credit_card').val(),
+               cvc: $('#cvc').val(),
+               exp_month: $('#exp-month').val(),
+               exp_year: $('#exp-year').val()
+
+           }, $scope.stripeResponseHandler);
+
+        };
+
+        $scope.stripeResponseHandler = function(status, response) {
+
+            console.log(response);
+            var $form = $("#webpayment_form");
+
+            if (response.error) {
+
+                $form.find('.payment-errors').text(response.error.message).css('display','block');
+
+            } else {
+
+                var token = response.id;
+
+                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+
+                $form.get(0).submit();
+
+            }
+
+
+        }
+
+
+    }]);
+
+    app.controller('shoppingCart', ['$scope', '$http', function($scope, $http, $localStorage, $sessionStorage, ngProgress) {
 
         $('[data-toggle="popover"]').popover();
 
@@ -113,10 +167,42 @@
 
         $scope.session = {};
         $scope.cart = {};
-        $scope.cart.subtotal = '0.00';
+        $scope.cart.subtotal = 0.00
         $scope.cart_count = 0;
         $scope.isRemoved = false;
         $scope.isRelatedProduct = true;
+
+        $http({
+            method: 'GET',
+            url: '/store/refresh-cart'
+        }).success(function (data, status, headers, config) {
+
+
+            $scope.cart = data.cart;
+            $scope.cart_total = data.total;
+            $scope.cart_count = data.count;
+            //sessionStorage.setItem("cart",JSON.stringify(data.cart));
+            //sessionStorage.setItem("cart_count",data.cart_count);
+
+            //$scope.cart = JSON.parse(sessionStorage.getItem("cart"));
+            //$scope.cart = 0;
+
+            //localStorage.setItem("cart_count",data.count);
+            //localStorage.setItem("cart_total",data.total);
+
+            //console.log(localStorage.getItem("cart"));
+            //console.log($scope.$cart);
+
+        }).error(function (data, status, headers, config) {
+
+            if (status == '404') {
+
+                //alert('Page Not Found');
+
+            }
+
+        });
+
 
         $scope.changeQty = function($indicator,$rowid) {
 
@@ -138,7 +224,7 @@
                 $scope.cart = data.cart;
                 $scope.cart_count = data.count;
                 $scope.cart_total = data.subtotal;
-
+                //alert($localStorage.message);
                 if ($indicator == 0) {
 
                     $.growl({
@@ -233,7 +319,7 @@
                 var link = $("#qty_form").attr("action") + "/" + $prod_id;
 
 
-            //alert(link);
+            //alert($localStorage.message);
 
             $http({
 
@@ -335,6 +421,7 @@
             }).success(function (data, status, headers, config) {
 
                     alert(data.msg);
+                    $scope.session.loggedin = true;
 
             }).error(function (data, status, headers, config) {
 
@@ -355,7 +442,7 @@
 
                     default:
 
-                        alert('Error');
+                        window.location.href = "/store/view-cart";
                         break;
 
                 }
@@ -371,25 +458,7 @@
 
         };
 
-        $http({
-            method: 'GET',
-            url: '/store/refresh-cart'
-        }).success(function (data, status, headers, config) {
 
-            //console.log(data.cart);
-            $scope.cart = data.cart;
-            $scope.cart_total = data.total;
-            $scope.cart_count = data.count;
-            //console.log($scope.cart.count);
-
-        }).error(function (data, status, headers, config) {
-
-            if(status == '404') {
-
-                //alert('Page Not Found');
-
-            }
-        });
 
 
     }]);
