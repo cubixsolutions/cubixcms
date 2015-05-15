@@ -18,6 +18,7 @@ class CreateWebpaymentsTable extends Migration {
            $table->integer('user_id')->unsigned();
            $table->string('token',255);
            $table->string('amount');
+            $table->boolean('active')->default(false);
            $table->timestamps();
            $table->foreign('user_id')->references('id')->on('users');
 

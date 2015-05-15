@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\WebPayments;
-
+use Carbon\Carbon;
 class webpaymentController extends Controller {
 
-	/**
+	private $is_customer = false;
+    private $last_four = null;
+    private $invoice_id;
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -20,11 +23,21 @@ class webpaymentController extends Controller {
         $webpayment = new WebPayments;
         $form = $webpayment->where('token', '=', $token)->firstOrFail();
 
-        dd($form);
+        if ($form->user->stripe_id != null) {
 
-        if(view()->exists('forms.webpayment')) {
+            $this->is_customer = true;
+            $this->last_four = $form->user->last_four;
 
-            return view('forms.webpayment');
+        } else {
+
+            $this->is_customer = false;
+
+        }
+
+        if(view()->exists('forms.webpayment') && $form->active == true) {
+
+            //dd(Carbon::now()->year);
+            return view('forms.webpayment',['webpayments_token' => $token,'is_customer' => $this->is_customer, 'last_four' => $this->last_four, 'name' => $form->user->name, 'amount' => $form->amount ]);
 
         } else {
 
@@ -47,24 +60,51 @@ class webpaymentController extends Controller {
 
         User::setStripeKey('sk_test_QkkR4Mq7x4VcMl3Tw9sf2P0A');
 
-        $token = $request->input('stripeToken');
+        $webpayments_token = $request->input('webpayments_token');
+        $token = ($request->input('stripeToken') ? $request->input('stripeToken') : null);
+        $amount = $request->input('amount') * 100;
+        //dd($amount);
 
-        $user = new User;
+        $webpayment = new WebPayments;
+        $webpayment = $webpayment->where('token','=',$webpayments_token)->first();
 
-        $customer = $user->find(1);
+        /*
+         * STEP ONE -- check if user has a stripe account and if not create one
+         */
 
-        if(!$customer->charge(1000, [
-            'source'    => $token,
-            'receipt_email' => $customer->email
+        if ($webpayment->user->stripe_id == null) {
+
+            $webpayment->user->subscription('customer')->create($token, [
+
+                'email' => $webpayment->user->email
+
+            ]);
+        }
+
+        /*
+         * STEP TWO -- charge customer credit card
+         */
+
+        if(!$webpayment->user->charge($amount, [
+
+            'customer'      => $webpayment->user->stripe_id,
+            'description'   => 'new purchase',
+            'receipt_email' => $webpayment->user->email,
+
         ])) {
 
-            echo "error in charging customer";
+                return response()->json(['status' => 'unsuccessful' ]);
+
 
         } else {
 
-            dd($customer);
+            $webpayment->active = false;
+            $webpayment->save();
+
+                return response()->json(['status' => 'successful']);
 
         }
+
 
 	}
 

@@ -117,20 +117,96 @@
 
     }]);
 
+    app.directive('cbxCreditCardValidation', function() {
+
+        return {
+
+            restrict: 'A',
+            link: function(scope,element) {
+
+                element.on('keyup', function(event) {
+
+                    if(Stripe.card.validateCardNumber(element.val())) {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+                        $(element).parent().parent().removeClass('has-error').addClass('has-success');
+                        $(element).parent().parent().find('label > .ccbrand').text(' | Card Brand: ' + Stripe.card.cardType(element.val()));
+
+                    } else {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                        $(element).parent().parent().removeClass('has-success').addClass('has-error');
+                        $(element).parent().parent().find('label > .ccbrand').text(' | Card Brand: ' + Stripe.card.cardType(element.val()));
+                    }
+
+                });
+
+            }
+
+        }
+
+    });
+
+    app.directive('cbxCvcValidation', function() {
+
+        return {
+
+            restrict: 'A',
+            link: function(scope,element) {
+
+                element.on('keyup', function(event) {
+
+                    if(Stripe.card.validateCVC(element.val())) {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+                        $(element).parent().parent().removeClass('has-error').addClass('has-success');
+
+                    } else {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                        $(element).parent().parent().removeClass('has-success').addClass('has-error');
+                    }
+
+                });
+
+            }
+
+        }
+
+    });
+
     app.controller('webpaymentController', ['$scope', '$http', function($scope,$http) {
 
         //alert('welcome');
+
         $scope.paynow = function() {
 
-           Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
+           if ($("#credit_card").length) {
 
-           Stripe.card.createToken({
-               number: $('#credit_card').val(),
-               cvc: $('#cvc').val(),
-               exp_month: $('#exp-month').val(),
-               exp_year: $('#exp-year').val()
 
-           }, $scope.stripeResponseHandler);
+               //alert('ok');
+
+               Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
+
+               Stripe.card.createToken({
+                   name: $("#name").val(),
+                   address_line1: $("#address_line1").val(),
+                   address_line2: $("#address_line2").val(),
+                   city: $("#city").val(),
+                   state: $("#state").val(),
+                   zip_code: $("#zip_code").val(),
+                   number: $('#credit_card').val(),
+                   cvc: $('#cvc').val(),
+                   exp_month: $('#exp-month').val(),
+                   exp_year: $('#exp-year').find('option:selected').text()
+
+               }, $scope.stripeResponseHandler);
+           } else {
+
+               var $form = $("#webpayment_form");
+               $form.get(0).submit();
+
+           }
 
         };
 
@@ -146,15 +222,51 @@
             } else {
 
                 var token = response.id;
-
+                $form.find('.payment-errors').text('').css('display','none');
                 $form.append($('<input type="hidden" name="stripeToken" />').val(token));
 
-                $form.get(0).submit();
+                $http({
+
+                    method: 'post',
+                    url: $('#webpayment_form').attr('action'),
+                    data: {
+
+                        '_token' : $('#_token').val(),
+                        'stripeToken' : token,
+                        'webpayments_token' : $("#webpayments_token").val(),
+                        'amount' : $("#amount").val()
+                    }
+
+                }).success(function (data, status, headers, config) {
+
+                    alert(data.status);
+
+                }).error(function (data, status, headers, config) {
+
+                  alert('error');
+
+                });
+
+
+                //$form.get(0).submit();
 
             }
 
 
-        }
+        };
+
+        $scope.next = function() {
+
+           $("#webpayment_wizard").wizard('next');
+
+
+        };
+
+        $scope.prev = function() {
+
+            $("#webpayment_wizard").wizard('previous');
+
+        };
 
 
     }]);

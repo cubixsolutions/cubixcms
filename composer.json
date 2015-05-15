@@ -11,7 +11,8 @@
 		"gloudemans/shoppingcart": "dev-master",
 		"misterphilip/maintenance-mode": "dev-development",
 		"barryvdh/laravel-ide-helper": "~2.0",
-		"anhskohbo/no-captcha": "2.x"
+		"anhskohbo/no-captcha": "2.x",
+		"jelovac/bitly4laravel": "3.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

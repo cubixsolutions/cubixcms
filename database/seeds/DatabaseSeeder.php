@@ -49,6 +49,10 @@
                 'email' => 'ryliedaddy@gmail.com',
                 'password' => Hash::make('password')]);
 
+            User::create(['name' => 'Sean Pollock',
+                'email' => 'sean@cubix-solutions.com',
+                'password'  => Hash::make('password')]);
+
         }
 
     }

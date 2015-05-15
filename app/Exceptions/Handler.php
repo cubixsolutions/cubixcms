@@ -1,6 +1,7 @@
 <?php namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler {
@@ -36,7 +37,15 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-		return parent::render($request, $e);
+		if ($e instanceof ModelNotFoundException)
+        {
+
+            // Custom logic for model not found...
+
+            dd($e->getMessage());
+
+        }
+        return parent::render($request, $e);
 	}
 
 }

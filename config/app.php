@@ -152,6 +152,7 @@ return [
         'MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
+        'Jelovac\Bitly4laravel\Bitly4laravelServiceProvider',
 
 	],
 
@@ -176,6 +177,7 @@ return [
 		'Cache'     => 'Illuminate\Support\Facades\Cache',
 		'Config'    => 'Illuminate\Support\Facades\Config',
 		'Cookie'    => 'Illuminate\Support\Facades\Cookie',
+        'Carbon'    => 'Carbon\Carbon',
 		'Crypt'     => 'Illuminate\Support\Facades\Crypt',
 		'DB'        => 'Illuminate\Support\Facades\DB',
 		'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
@@ -203,6 +205,7 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
         'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
+        'Bitly'     => 'Jelovac\Bitly4laravel\Facades\Bitly4laravel',
 
 	],
 
