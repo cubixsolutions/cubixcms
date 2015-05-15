@@ -185,16 +185,16 @@
 
 
                //alert('ok');
-
+               $("#paybutton").attr('disabled','disabled');
                Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
 
                Stripe.card.createToken({
                    name: $("#name").val(),
                    address_line1: $("#address_line1").val(),
                    address_line2: $("#address_line2").val(),
-                   city: $("#city").val(),
-                   state: $("#state").val(),
-                   zip_code: $("#zip_code").val(),
+                   address_city: $("#city").val(),
+                   address_state: $("#state").val(),
+                   address_zip: $("#zip_code").val(),
                    number: $('#credit_card').val(),
                    cvc: $('#cvc').val(),
                    exp_month: $('#exp-month').val(),
@@ -218,6 +218,7 @@
             if (response.error) {
 
                 $form.find('.payment-errors').text(response.error.message).css('display','block');
+                $("#paybutton").removeAttr('disabled');
 
             } else {
 
@@ -239,7 +240,9 @@
 
                 }).success(function (data, status, headers, config) {
 
+                    $('#webpayment_wizard').wizard('next');
                     alert(data.status);
+                    console.log(data.change);
 
                 }).error(function (data, status, headers, config) {
 

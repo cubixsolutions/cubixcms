@@ -14,7 +14,7 @@
 
             <div class="col-md-12">
 
-                <div class="wizard" data-initialize="wizard" id="webpayment_wizard"
+                <div class="wizard" data-initialize="wizard" data-restrict="previous" id="webpayment_wizard"
                      ng-controller="webpaymentController">
 
                     <ul class="steps">
@@ -43,6 +43,8 @@
 
                                     <p>This web payment form is completely secure and in no way does your credit card
                                         information touch our servers.</p>
+
+                                    <p>Click the next button to proceed.</p>
                                     <a class="btn btn-primary" ng-click="next()">Next</a>
 
                                 </div>
@@ -320,7 +322,7 @@
 
                                                 <div class="form-group">
 
-                                                    <input type="button" class="btn btn-primary btn-lg"
+                                                    <input type="button" id="paybutton" class="btn btn-primary btn-lg"
                                                            ng-click="paynow()" value="Pay Now"/>
                                                     <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}"/>
                                                     <input type="hidden" name="webpayments_token" id="webpayments_token"
@@ -340,6 +342,23 @@
                             </div>
 
                         </div>
+
+                        <div class="step-pane" data-step="3">
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+
+                                    <h4>Thank you for your payment</h4>
+                                    <p></p>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
                     </div>
                 </div>
 

@@ -84,16 +84,16 @@ class webpaymentController extends Controller {
         /*
          * STEP TWO -- charge customer credit card
          */
+        $charge = $webpayment->user->charge($amount, [
 
-        if(!$webpayment->user->charge($amount, [
-
-            'customer'      => $webpayment->user->stripe_id,
+           'customer'       => $webpayment->user->stripe_id,
             'description'   => 'new purchase',
             'receipt_email' => $webpayment->user->email,
+        ]);
 
-        ])) {
+        if(!$charge) {
 
-                return response()->json(['status' => 'unsuccessful' ]);
+                return response()->json(['status' => 'unsuccessful','charge' => $charge ]);
 
 
         } else {
@@ -101,7 +101,7 @@ class webpaymentController extends Controller {
             $webpayment->active = false;
             $webpayment->save();
 
-                return response()->json(['status' => 'successful']);
+                return response()->json(['status' => 'successful', 'charge' => $charge]);
 
         }
 

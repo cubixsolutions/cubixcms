@@ -153,6 +153,7 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
         'Jelovac\Bitly4laravel\Bitly4laravelServiceProvider',
+        'Barryvdh\Omnipay\ServiceProvider',
 
 	],
 
@@ -206,6 +207,7 @@ return [
         'Html'      => 'Illuminate\Html\HtmlFacade',
         'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
         'Bitly'     => 'Jelovac\Bitly4laravel\Facades\Bitly4laravel',
+        'Omnipay'   => 'Barryvdh\Omnipay\Facade',
 
 	],
 
