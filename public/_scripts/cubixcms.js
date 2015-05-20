@@ -9,7 +9,7 @@
 
 
 
-    var app = angular.module('cubixcms', ['ngProgress','ngStorage','angularPayments'],function($interpolateProvider) {
+    var app = angular.module('cubixcms', [], function($interpolateProvider) {
 
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
@@ -175,11 +175,12 @@
 
     });
 
-    app.controller('webpaymentController', ['$scope', '$http', function($scope,$http) {
+    app.controller('webpaymentController', ['$scope', '$http', function($scope, $http) {
 
         //alert('welcome');
-        $scope.confirmation_code = null;
-
+        $scope.session.email = "";
+        $scope.ui = {};
+        $scope.ui.paybutton = "Pay Now";
         $scope.paynow = function() {
 
            if ($("#credit_card").length) {
@@ -187,6 +188,7 @@
 
                //alert('ok');
                $("#paybutton").attr('disabled','disabled');
+               $scope.ui.paybutton = "Processing...";
                Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
 
                Stripe.card.createToken({
@@ -213,13 +215,14 @@
 
         $scope.stripeResponseHandler = function(status, response) {
 
-            console.log(response);
+            //console.log(response);
             var $form = $("#webpayment_form");
 
             if (response.error) {
 
                 $form.find('.payment-errors').text(response.error.message).css('display','block');
                 $("#paybutton").removeAttr('disabled');
+                $scope.ui.paybutton = "Pay Now";
 
             } else {
 
@@ -241,7 +244,7 @@
 
                 }).success(function (data, status, headers, config) {
 
-                    console.log(data.card_error);
+                    //console.log(data.card_error);
                     $("#paybutton").removeAttr('disabled');
 
 
@@ -249,22 +252,26 @@
 
                         $form.find('.payment-errors').text(data.card_error.message).css('display','block');
                         $("#paybutton").removeAttr('disabled');
+                        $scope.ui.paybutton = "Pay Now";
 
                     } else if(data.status === 'unsuccessful') {
 
                         $form.find('.payment-errors').text('There was an issue with your card.  Please contact your bank or financial institution for assistance.').css('display','block');
                         $("#paybutton").removeAttr('disabled');
+                        $scope.ui.paybutton = "Pay Now";
 
                     } else if(data.exception) {
 
                         $form.find('.payment-errors').text(data.exception).css('display','block');
                         $("#paybutton").removeAttr('disabled');
+                        $scope.ui.paybutton = "Pay Now";
 
                     } else {
 
-                        $scope.confirmation_code = data.confirmation_code;
+                        //$scope.confirmation_code = data.confirmation_code;
                         //alert('Confirmation Code: ' + data.confirmation_code);
-
+                        $scope.session.email = data.email;
+                        //console.log($scope);
                         $('#webpayment_wizard').wizard('next');
 
                     }
@@ -311,7 +318,6 @@
         $scope.cart_count = 0;
         $scope.isRemoved = false;
         $scope.isRelatedProduct = true;
-        $scope.confirmation_code = null;
 
         $http({
             method: 'GET',

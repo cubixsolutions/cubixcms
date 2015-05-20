@@ -323,7 +323,7 @@
                                                 <div class="form-group">
 
                                                     <input type="button" id="paybutton" class="btn btn-primary btn-lg"
-                                                           ng-click="paynow()" value="Pay Now"/>
+                                                           ng-click="paynow()" ng-model="ui.paybutton" value="<% ui.paybutton %>"/>
                                                     <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}"/>
                                                     <input type="hidden" name="webpayments_token" id="webpayments_token"
                                                            value="{{$webpayments_token}}"/>
@@ -349,13 +349,12 @@
 
                                 <div class="col-md-12">
 
-                                    <h4>Thank you for your payment</h4>
-                                    <p>You're confirmation code is: <% confirmation_code %></p>
+                                    <h4>Thank you for your payment.  We appreciate you're business.</h4>
                                     <p>You will see a charge on your billing statement from CUBIX-SOLUTIONS.COM in the amount of ${{$amount}}.</p>
-                                    <p>Shortly, you will receive a confirmation email.</p>
-                                    <div class="alert alert-info">
+                                    <p>We have sent an email to <% session.email %> confirming you're payment.</p>
+                                    <div class="alert alert-warning">
 
-                                    	<strong>Information</strong>
+                                    	<strong>Important</strong>
                                         <p>If you do not receive a confirmation email from us, please check your spam, bulk or junk mail folders.  If you find
                                         the email there, it was diverted by your ISP, your spam-blocking software or by filters.</p>
 

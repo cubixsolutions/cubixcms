@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver' => env('MAIL_DRIVER', 'mailgun'),
+	'driver' => env('MAIL_DRIVER', 'smtp'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+	'host' => env('MAIL_HOST', 'mail.cubix-solutions.com'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'postmaster@sandbox308e393563654fd083c990d5fb1af687.mailgun.org', 'name' => 'postmaster'],
+	'from' => ['address' => 'billing@cubix-solutions.com', 'name' => 'Cubix Solutions Billing'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => env('MAIL_USERNAME'),
+	'username' => env('MAIL_USERNAME','sean@cubix-solutions.com'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => env('MAIL_PASSWORD'),
+	'password' => env('MAIL_PASSWORD','J5U2fcvbrfjubbjfureirlcgjnvvlfbr'),
 
 	/*
 	|--------------------------------------------------------------------------

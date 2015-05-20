@@ -166,14 +166,16 @@ class webpaymentController extends Controller {
             $email = $webpayment->user->email;
 
             // TODO:  Send email to customer
-            /*
-            Mail::send('emails.welcome', array('name' => $name), function($message) use ($name, $email)
-            {
-                $message->to($email, $name)->subject('Welcome!');
-            });
-            */
 
-            return response()->json(['status' => 'successful', 'charge' => $charge, 'confirmation_code' => $confirmation_code]);
+            Mail::send('emails.payment_confirmation', array('name' => $name, 'amount' => $amount), function($message) use ($name, $email)
+            {
+
+                $message->to($email, $name)->subject('Thank you for your payment');
+
+            });
+
+
+            return response()->json(['status' => 'successful', 'charge' => $charge, 'name' => $name, 'email' => $email]);
 
         }
 
