@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\WebPayments;
-use Carbon\Carbon;
+use Carbon\Carbon,Omnipay,Mail;
 class webpaymentController extends Controller {
 
 	private $is_customer = false;
@@ -72,28 +72,88 @@ class webpaymentController extends Controller {
          * STEP ONE -- check if user has a stripe account and if not create one
          */
 
-        if ($webpayment->user->stripe_id == null) {
+        if ($webpayment->user->stripe_active != true) {
 
-            $webpayment->user->subscription('customer')->create($token, [
+            try {
+                // This creates the user account in Stripe with credit card on file.
+                // The sole purpose of this is only to create an account and then the customer is charged
+                // in the next try block.
+                $webpayment->user->subscription('customer')->create($token, [
 
-                'email' => $webpayment->user->email
+                    'email' => $webpayment->user->email
 
-            ]);
+                ]);
+
+            } catch(\Stripe_CardError $e) {
+
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json(['card_error'       => array('type' => $err['type'],
+                                                                     'code' => $err['code'],
+                                                                     'param' => $err['param'],
+                                                                     'message' => $err['message'])]);
+
+            } catch(\Stripe_Error $e) {
+
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+                return response()->json(['card_error'       => array('type' => $err['type'],
+                    'code' => $err['code'],
+                    'param' => $err['param'],
+                    'message' => $err['message'])]);
+
+
+            } catch (\Exception $e) {
+
+                $err = $e->getMessage();
+
+                return response()->json(['exception'    => $err]);
+
+            }
         }
 
         /*
          * STEP TWO -- charge customer credit card
          */
-        $charge = $webpayment->user->charge($amount, [
+        try {
+            $charge = $webpayment->user->charge($amount, [
 
-           'customer'       => $webpayment->user->stripe_id,
-            'description'   => 'new purchase',
-            'receipt_email' => $webpayment->user->email,
-        ]);
+                'customer' => $webpayment->user->stripe_id,
+                'description' => 'new purchase',
+                'receipt_email' => $webpayment->user->email,
+            ]);
+        } catch(\Stripe_CardError $e) {
+
+            $body = $e->getJsonBody();
+            $err = $body['error'];
+
+            return response()->json(['card_error'       => array('type' => $err['type'],
+                                                                 'code' => $err['code'],
+                                                                 'param' => $err['param'],
+                                                                 'message' => $err['message'])]);
+        } catch(\Stripe_Error $e) {
+
+            $body = $e->getJsonBody();
+            $err = $body['error'];
+            return response()->json(['card_error'       => array('type' => $err['type'],
+                'code' => $err['code'],
+                'param' => $err['param'],
+                'message' => $err['message'])]);
+
+
+        } catch (\Exception $e) {
+
+            $err = $e->getMessage();
+
+            return response()->json(['exception'    => $err]);
+
+        }
 
         if(!$charge) {
 
-                return response()->json(['status' => 'unsuccessful','charge' => $charge ]);
+
+            return response()->json(['status' => 'unsuccessful','charge' => $charge ]);
 
 
         } else {
@@ -101,7 +161,19 @@ class webpaymentController extends Controller {
             $webpayment->active = false;
             $webpayment->save();
 
-                return response()->json(['status' => 'successful', 'charge' => $charge]);
+            $confirmation_code = strtoupper(substr(md5(uniqid(rand(), true)), 16, 16));
+            $name = $webpayment->user->name;
+            $email = $webpayment->user->email;
+
+            // TODO:  Send email to customer
+            /*
+            Mail::send('emails.welcome', array('name' => $name), function($message) use ($name, $email)
+            {
+                $message->to($email, $name)->subject('Welcome!');
+            });
+            */
+
+            return response()->json(['status' => 'successful', 'charge' => $charge, 'confirmation_code' => $confirmation_code]);
 
         }
 

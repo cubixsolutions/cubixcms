@@ -350,7 +350,16 @@
                                 <div class="col-md-12">
 
                                     <h4>Thank you for your payment</h4>
-                                    <p></p>
+                                    <p>You're confirmation code is: <% confirmation_code %></p>
+                                    <p>You will see a charge on your billing statement from CUBIX-SOLUTIONS.COM in the amount of ${{$amount}}.</p>
+                                    <p>Shortly, you will receive a confirmation email.</p>
+                                    <div class="alert alert-info">
+
+                                    	<strong>Information</strong>
+                                        <p>If you do not receive a confirmation email from us, please check your spam, bulk or junk mail folders.  If you find
+                                        the email there, it was diverted by your ISP, your spam-blocking software or by filters.</p>
+
+                                    </div>
 
                                 </div>
 

@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver' => env('MAIL_DRIVER', 'smtp'),
+	'driver' => env('MAIL_DRIVER', 'mailgun'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => 'postmaster@sandbox308e393563654fd083c990d5fb1af687.mailgun.org', 'name' => 'postmaster'],
 
 	/*
 	|--------------------------------------------------------------------------

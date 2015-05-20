@@ -42,7 +42,8 @@ class Handler extends ExceptionHandler {
 
             // Custom logic for model not found...
 
-            dd($e->getMessage());
+
+            abort('404');
 
         }
         return parent::render($request, $e);

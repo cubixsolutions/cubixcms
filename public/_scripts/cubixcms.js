@@ -178,6 +178,7 @@
     app.controller('webpaymentController', ['$scope', '$http', function($scope,$http) {
 
         //alert('welcome');
+        $scope.confirmation_code = null;
 
         $scope.paynow = function() {
 
@@ -240,9 +241,33 @@
 
                 }).success(function (data, status, headers, config) {
 
-                    $('#webpayment_wizard').wizard('next');
-                    alert(data.status);
-                    console.log(data.change);
+                    console.log(data.card_error);
+                    $("#paybutton").removeAttr('disabled');
+
+
+                    if(data.card_error) {
+
+                        $form.find('.payment-errors').text(data.card_error.message).css('display','block');
+                        $("#paybutton").removeAttr('disabled');
+
+                    } else if(data.status === 'unsuccessful') {
+
+                        $form.find('.payment-errors').text('There was an issue with your card.  Please contact your bank or financial institution for assistance.').css('display','block');
+                        $("#paybutton").removeAttr('disabled');
+
+                    } else if(data.exception) {
+
+                        $form.find('.payment-errors').text(data.exception).css('display','block');
+                        $("#paybutton").removeAttr('disabled');
+
+                    } else {
+
+                        $scope.confirmation_code = data.confirmation_code;
+                        //alert('Confirmation Code: ' + data.confirmation_code);
+
+                        $('#webpayment_wizard').wizard('next');
+
+                    }
 
                 }).error(function (data, status, headers, config) {
 
@@ -286,6 +311,7 @@
         $scope.cart_count = 0;
         $scope.isRemoved = false;
         $scope.isRelatedProduct = true;
+        $scope.confirmation_code = null;
 
         $http({
             method: 'GET',
