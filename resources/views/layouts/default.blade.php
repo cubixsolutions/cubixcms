@@ -8,29 +8,20 @@
 
     <title>{{$title}} - {{$slogan}}</title>
 
-    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel="stylesheet">
+    <link href='/_css/bootstrap.css' rel="stylesheet">
     <link href='/_css/themes/flatly/bootstrap.min.css' rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/_css/font-awesome.css" rel="stylesheet">
     <link href="/_css/ionicons.css" rel="stylesheet">
-    <link href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css"
-          rel="stylesheet">
     <link href="/_css/fuelux.css" rel="stylesheet">
     <link href='/_css/style.css' rel="stylesheet">
 
-    <script src='//code.jquery.com/jquery-1.11.2.min.js'></script>
-    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
+    <script src='/_scripts/jquery-1.11.3.js'></script>
+    <script src='/_scripts/bootstrap.js'></script>
     <script src="/_scripts/fuelux.js"></script>
-    <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-    <script src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="/_scripts/plugins/bootstrap-growl/bootstrap-growl-2.0.0.js"></script>
-
-    <!--CDN link for the latest TweenMax-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
-    <script src="/_scripts/ngProgress.js"></script>
-    <script src="/_scripts/angular-payments.js"></script>
-    <script src="/_scripts/ngStorage.js"></script>
+    <script src="/_scripts/TweenMax.js"></script>
+    <script src="/_scripts/TimelineMax.js"></script>
+    <script src="/_scripts/angular.js"></script>
 
     <script src="/_scripts/jquery.matchHeight.js"></script>
     <script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
@@ -38,11 +29,13 @@
 
     @yield("head")
 
+
     <script src="//use.typekit.net/oor4dui.js"></script>
     <script>try {
             Typekit.load();
         } catch (e) {
         }</script>
+
 
 </head>
 

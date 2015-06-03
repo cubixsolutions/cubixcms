@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => env('MAIL_USERNAME','sean@cubix-solutions.com'),
+	'username' => 'sean@cubix-solutions.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => env('MAIL_PASSWORD','J5U2fcvbrfjubbjfureirlcgjnvvlfbr'),
+	'password' => 'J5U2fcvbrfjubbjfureirlcgjnvvlfbr',
 
 	/*
 	|--------------------------------------------------------------------------

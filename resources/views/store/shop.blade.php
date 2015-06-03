@@ -39,20 +39,6 @@
 
                                                 <h3>{{$category->category}}</h3>
 
-                                                <div class="alert alert-description" style="height: 100px;">
-
-                                                    <div class="description">
-
-                                                        <span class="ellipsis_text">
-
-                                                            {{$category->description}}
-
-                                                        </span>
-
-                                                    </div>
-
-                                                </div>
-
 
                                             </div>
 

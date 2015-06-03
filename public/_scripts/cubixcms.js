@@ -175,12 +175,178 @@
 
     });
 
+    app.directive('cbxInputValidation', function() {
+
+        return {
+
+            restrict: 'A',
+            link: function(scope,element) {
+
+                element.on('keyup', function(event) {
+
+                    if(element.val() !== "") {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+                        $(element).parent().removeClass('has-error').addClass('has-success');
+
+                    } else {
+
+                        $(element).parent().find('span.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                        $(element).parent().removeClass('has-success').addClass('has-error');
+
+                    }
+
+                });
+
+            }
+
+        }
+
+
+    });
+
+    app.directive('cbxBanner', function() {
+
+       return {
+
+          restrict: 'A',
+          link: function(scope,elem) {
+
+            var t1 = new TimelineMax();
+
+            var slideNumber = 0,
+                nextSlide = 1,
+                menu = $(".banner-controls"),
+                slides = $(".slide"),
+                totalSlides = slides.length,
+                pauseTime = 4,
+                duration = 1;
+
+              for(var i = 0; i < totalSlides; i++) {
+
+                  menu.append('<li><a href="#" class="btn btn-primary btn-sm">' + i + '</a></li>');
+
+              }
+
+              elem.css({'background' : 'rgba(50,50,50,0.5)',
+                      'color' : '#ffffff',
+                      'width'   : '100%',
+                      'height' : '250px',
+                      'border' : '4px solid rgba(80,80,80,0.5)',
+                      'overflow' : 'none',
+                      'position' : 'relative',
+                      'display' : 'block'});
+
+            elem.find('.media-heading').css({'text-shadow' : '1px 1px 5px #000'});
+            elem.find('img').each(function() {
+
+                $(this).css({'height' : '245px'});
+
+            });
+
+
+              menu.css({'z-index' : '5000'});
+              slides.css({'position' : 'absolute','left' : '0px', 'top' : '0px'});
+
+              advanceSlide = function() {
+
+                  slides.each(function(slideNumber,totalSlides) {
+
+                      t1.addLabel(slideNumber);
+                      if($(this).hasClass('title') ) {
+
+                          t1.from($(this).find('img'),duration,{opacity:0, scale:0,rotation:360,ease:Bounce.easeOut});
+                      }
+
+                      t1.from($(this).find('.media-object'),duration,{opacity:0,scale:0,ease:Bounce.easeOut});
+                      t1.from($(this).find('.media-heading'),duration,{opacity:0,scale:0, ease:Bounce.easeOut});
+                      t1.from($(this).find('.media-body h2'),duration,{opacity:0});
+                      t1.from($(this).find('.media-body a'),duration,{opacity:0});
+                      t1.addLabel(slideNumber);
+
+                      if($(this).hasClass('title') ) {
+
+                          t1.to($(this).find('img'),duration + 3,{opacity:0,scale:200}, "+=" + pauseTime);
+
+                      } else {
+
+                          t1.to($(this).find('.media-object'), duration, {opacity: 0}, "+=" + pauseTime);
+
+                      }
+
+                      t1.to($(this).find('.media-heading'),duration,{opacity:0});
+                      t1.to($(this).find('.media-body h2'),duration,{opacity:0});
+                      t1.to($(this).find('.media-body a'),duration,{opacity:0});
+                      t1.repeat(-1);
+                      console.log($(this).find('.media-object'));
+
+
+                  });
+
+
+              };
+
+              slides.on('mouseover', this, function() {
+
+                  t1.pause();
+
+              });
+
+              slides.on('mouseout', this, function() {
+
+                 t1.play();
+
+              });
+
+              menu.find('li a').each(function() {
+
+                  $(this).on('click',this,function() {
+
+                    //console.log($(this).text());
+                      //console.log(t1.currentLabel());
+
+                      t1.seek($(this).text());
+                  });
+
+
+              });
+
+              // run slides
+              advanceSlide();
+
+
+
+
+              /*
+              elem.find('.slide').each(function() {
+
+                t1.from(slides[slideNumber] + ' .media-object','1',{opacity:0,scale:0, ease:Bounce.easeOut});
+                t1.from(slides[slideNumber] + ' .media-heading','1',{opacity:0,scale:0, ease:Bounce.easeOut});
+                t1.from(slides[slideNumber] + '.media-body h2','1',{opacity:0});
+                t1.from(slides[slideNumber] + '.media-body a','1',{opacity:0});
+                //TweenMax.from('.media-object','1',{opacity:0,scale:0, ease:Bounce.easeOut});
+                //TweenMax.from('.media-heading','1',{opacity:0,scale:0, ease:Bounce.easeOut, delay:1.5});
+                //TweenMax.from('.media-body h2','1',{opacity:0, delay:2.5});
+                //TweenMax.from('.media-body a','1',{opacity:0,delay:3.0})
+
+            });
+            */
+
+
+
+          }
+       };
+
+    });
+
     app.controller('webpaymentController', ['$scope', '$http', function($scope, $http) {
 
         //alert('welcome');
         $scope.session.email = "";
+        $scope.session.url = "";
         $scope.ui = {};
         $scope.ui.paybutton = "Pay Now";
+
         $scope.paynow = function() {
 
            if ($("#credit_card").length) {
@@ -206,8 +372,39 @@
                }, $scope.stripeResponseHandler);
            } else {
 
-               var $form = $("#webpayment_form");
-               $form.get(0).submit();
+               /*
+                * TODO: Processes payment if customer card is already on file.
+                */
+
+                //console.log($form);
+               $("#paybutton").attr('disabled','disabled');
+               $scope.ui.paybutton = "Processing...";
+
+               $http({
+
+                   method: 'post',
+                   url:   $('#webpayment_form').attr('action'),
+                   data: {
+
+                        'cardonfile' : true,
+                        '_token' : $('#_token').val(),
+                        'webpayments_token' : $("#webpayments_token").val(),
+                        'amount' : $("#amount").val()
+
+                   }
+
+               }).success(function(data,status,headers,config) {
+
+                   $scope.session.email = data.email;
+                   //console.log($scope);
+                   $('#webpayment_wizard').wizard('next');
+
+               }).error(function(data,status,headers,config) {
+
+                   $scope.ui.paybutton = "Pay Now";
+                   $("#paybutton").removeAttr('disabled');
+                   alert('Error with processing payment.')
+               });
 
            }
 
@@ -217,12 +414,13 @@
 
             //console.log(response);
             var $form = $("#webpayment_form");
-
+            $scope.ui.paybutton = "Pay Now";
             if (response.error) {
 
                 $form.find('.payment-errors').text(response.error.message).css('display','block');
-                $("#paybutton").removeAttr('disabled');
                 $scope.ui.paybutton = "Pay Now";
+                $("#paybutton").removeAttr('disabled');
+
 
             } else {
 
@@ -245,26 +443,29 @@
                 }).success(function (data, status, headers, config) {
 
                     //console.log(data.card_error);
+                    $scope.ui.paybutton = 'Pay Now';
                     $("#paybutton").removeAttr('disabled');
-
 
                     if(data.card_error) {
 
                         $form.find('.payment-errors').text(data.card_error.message).css('display','block');
-                        $("#paybutton").removeAttr('disabled');
                         $scope.ui.paybutton = "Pay Now";
+                        $("#paybutton").removeAttr('disabled');
+
 
                     } else if(data.status === 'unsuccessful') {
 
                         $form.find('.payment-errors').text('There was an issue with your card.  Please contact your bank or financial institution for assistance.').css('display','block');
-                        $("#paybutton").removeAttr('disabled');
                         $scope.ui.paybutton = "Pay Now";
+                        $("#paybutton").removeAttr('disabled');
+
 
                     } else if(data.exception) {
 
                         $form.find('.payment-errors').text(data.exception).css('display','block');
-                        $("#paybutton").removeAttr('disabled');
                         $scope.ui.paybutton = "Pay Now";
+                        $("#paybutton").removeAttr('disabled');
+
 
                     } else {
 
@@ -272,18 +473,20 @@
                         //alert('Confirmation Code: ' + data.confirmation_code);
                         $scope.session.email = data.email;
                         //console.log($scope);
+                        $scope.ui.paybutton = "Pay Now";
+                        $("#paybutton").removeAttr('disabled');
                         $('#webpayment_wizard').wizard('next');
 
                     }
 
                 }).error(function (data, status, headers, config) {
 
-                  alert('error');
+                    $("#paybutton").removeAttr('disabled');
+                    $scope.ui.paybutton = "Pay Now";
+                    alert('error');
 
                 });
 
-
-                //$form.get(0).submit();
 
             }
 
@@ -314,7 +517,7 @@
 
         $scope.session = {};
         $scope.cart = {};
-        $scope.cart.subtotal = 0.00
+        $scope.cart.subtotal = 0.00;
         $scope.cart_count = 0;
         $scope.isRemoved = false;
         $scope.isRelatedProduct = true;

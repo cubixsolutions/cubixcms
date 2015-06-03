@@ -17,33 +17,49 @@ class webpaymentController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index($token)
+	public function index($token = null)
 	{
 
         $webpayment = new WebPayments;
-        $form = $webpayment->where('token', '=', $token)->firstOrFail();
 
-        if ($form->user->stripe_id != null) {
+        if ($token != null) {
+            $form = $webpayment->where('token', '=', $token)->firstOrFail();
 
-            $this->is_customer = true;
-            $this->last_four = $form->user->last_four;
+            if ( $form->user->stripe_id != null ) {
 
+                $this->is_customer = true;
+                $this->last_four = $form->user->last_four;
+
+            } else {
+
+                $this->is_customer = false;
+
+            }
+
+            if ( view()->exists('forms.webpayment') && $form->active == true ) {
+
+                //dd(Carbon::now()->year);
+                return view('forms.webpayment', ['webpayments_token' => $token, 'is_customer' => $this->is_customer, 'last_four' => $this->last_four, 'name' => $form->user->name, 'amount' => $form->amount]);
+
+            } else {
+
+                abort('404');
+
+            }
         } else {
 
-            $this->is_customer = false;
+            // TODO:  Add index page for webpayments entry
+            if (view()->exists('forms.webpayment_index')) {
 
+                return view('forms.webpayment_index');
+
+            } else {
+
+                abort('404');
+
+            }
         }
 
-        if(view()->exists('forms.webpayment') && $form->active == true) {
-
-            //dd(Carbon::now()->year);
-            return view('forms.webpayment',['webpayments_token' => $token,'is_customer' => $this->is_customer, 'last_four' => $this->last_four, 'name' => $form->user->name, 'amount' => $form->amount ]);
-
-        } else {
-
-            abort('404');
-
-        }
 
 	}
 
@@ -74,42 +90,45 @@ class webpaymentController extends Controller {
 
         if ($webpayment->user->stripe_active != true) {
 
-            try {
-                // This creates the user account in Stripe with credit card on file.
-                // The sole purpose of this is only to create an account and then the customer is charged
-                // in the next try block.
-                $webpayment->user->subscription('customer')->create($token, [
+            if ( $token != null ) {
+                try {
+                    // This creates the user account in Stripe with credit card on file.
+                    // The sole purpose of this is only to create an account and then the customer is charged
+                    // in the next try block.
+                    $webpayment->user->subscription('customer')->create($token, [
 
-                    'email' => $webpayment->user->email
+                        'email' => $webpayment->user->email
 
-                ]);
+                    ]);
 
-            } catch(\Stripe_CardError $e) {
+                } catch ( \Stripe_CardError $e ) {
 
-                $body = $e->getJsonBody();
-                $err = $body['error'];
+                    $body = $e->getJsonBody();
+                    $err = $body[ 'error' ];
 
-                return response()->json(['card_error'       => array('type' => $err['type'],
-                                                                     'code' => $err['code'],
-                                                                     'param' => $err['param'],
-                                                                     'message' => $err['message'])]);
+                    return response()->json(['card_error' => array('type' => $err[ 'type' ],
+                        'code' => $err[ 'code' ],
+                        'param' => $err[ 'param' ],
+                        'message' => $err[ 'message' ])]);
 
-            } catch(\Stripe_Error $e) {
+                } catch ( \Stripe_Error $e ) {
 
-                $body = $e->getJsonBody();
-                $err = $body['error'];
-                return response()->json(['card_error'       => array('type' => $err['type'],
-                    'code' => $err['code'],
-                    'param' => $err['param'],
-                    'message' => $err['message'])]);
+                    $body = $e->getJsonBody();
+                    $err = $body[ 'error' ];
+
+                    return response()->json(['card_error' => array('type' => $err[ 'type' ],
+                        'code' => $err[ 'code' ],
+                        'param' => $err[ 'param' ],
+                        'message' => $err[ 'message' ])]);
 
 
-            } catch (\Exception $e) {
+                } catch ( \Exception $e ) {
 
-                $err = $e->getMessage();
+                    $err = $e->getMessage();
 
-                return response()->json(['exception'    => $err]);
+                    return response()->json(['exception' => $err]);
 
+                }
             }
         }
 
@@ -167,7 +186,7 @@ class webpaymentController extends Controller {
 
             // TODO:  Send email to customer
 
-            Mail::send('emails.payment_confirmation', array('name' => $name, 'amount' => $amount), function($message) use ($name, $email)
+            Mail::send('emails.payment_confirmation', array('name' => $name, 'amount' => $amount / 100), function($message) use ($name, $email)
             {
 
                 $message->to($email, $name)->subject('Thank you for your payment');

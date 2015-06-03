@@ -66,7 +66,7 @@
                                 <div class="panel-body" ng-controller="webpaymentController">
 
 
-                                    <form action="/webpayment/create" method="post" id="webpayment_form">
+                                    <form action="/webpayment/create" method="post" name="webpaymentForm" id="webpayment_form" novalidate rc-submit="paynow()">
 
                                         @if($is_customer == true)
                                         <div class="row">
@@ -107,13 +107,20 @@
                                                             <input type="text" class="form-control" name="amount" id="amount" value="{{$amount}}" disabled/>
 
                                                         </div>
-                                                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                                                        <input type="hidden" name="webpayments_token"
+
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <input type="button" id="paybutton" class="btn btn-primary btn-lg"
+                                                               ng-click="paynow()" ng-model="ui.paybutton" value="<% ui.paybutton %>"/>
+                                                        <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}"/>
+                                                        <input type="hidden" name="webpayments_token" id="webpayments_token"
                                                                value="{{$webpayments_token}}"/>
 
                                                     </div>
 
-                                                    <input type="submit" class="btn btn-primary" ng-click="paynow()" value="Pay Now" />
+
                                                 </div>
 
                                             </div>
@@ -138,16 +145,17 @@
                                             <div class="col-md-6">
 
                                                 <!-- TODO: Address Fields go here -->
-                                                <div class="form-group">
+                                                <div class="form-group has-error has-feedback">
 
                                                     <label for="name" class="label-control">
                                                         Name as Shown on Credit Card:
                                                     </label>
-                                                    <input type="text" class="form-control" id="name"/>
+                                                    <input type="text" class="form-control" cbx-input-validation id="name"/>
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group has-error has-feedback">
 
                                                     <label for="address_line1" class="label-control">
 
@@ -155,8 +163,9 @@
 
                                                     </label>
 
-                                                    <input type="text" class="form-control" id="address_line1"
+                                                    <input type="text" class="form-control" cbx-input-validation id="address_line1"
                                                            placeholder="Street address as shown on billing statement"/>
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 
                                                 </div>
 
@@ -173,7 +182,7 @@
 
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group has-error has-feedback">
 
                                                     <label for="city" class="label-control">
 
@@ -181,7 +190,8 @@
 
                                                     </label>
 
-                                                    <input type="text" class="form-control" id="city"/>
+                                                    <input type="text" class="form-control" cbx-input-validation id="city"/>
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 
                                                 </div>
 
@@ -193,12 +203,75 @@
 
                                                     </label>
 
-                                                    <input type="text" class="form-control" id="state"/>
+                                                    <select class="form-control" id="state">
 
+                                                        <?php
+
+                                                            $states = array('Please select state...' => '0',
+                                                                            'Alabama' => 'AL',
+                                                                            'Alaska'  => 'AK',
+                                                                            'Arizona' => 'AZ',
+                                                                            'Arkansas' => 'AR',
+                                                                            'California' => 'CA',
+                                                                            'Colorado'   => 'CO',
+                                                                            'Connecticut'   => 'CT',
+                                                                            'Delaware'      => 'DE',
+                                                                            'Florada'       => 'FL',
+                                                                            'Georgia'       => 'GA',
+                                                                            'Hawaii'        => 'HI',
+                                                                            'Idaho'         => 'ID',
+                                                                            'Illinois'      => 'IL',
+                                                                            'Indiana'       => 'IN',
+                                                                            'Iowa'          => 'IA',
+                                                                            'Kansas'        => 'KS',
+                                                                            'Kentucky'      => 'KY',
+                                                                            'Louisiana'     => 'LA',
+                                                                            'Maine'         => 'ME',
+                                                                            'Maryland'      => 'MD',
+                                                                            'Massachusetts' => 'MA',
+                                                                            'Michigan'      => 'MI',
+                                                                            'Minnesota'     => 'MN',
+                                                                            'Mississippi'   => 'MS',
+                                                                            'Missouri'      => 'MO',
+                                                                            'Montana'       => 'MT',
+                                                                            'Nebraska'      => 'NE',
+                                                                            'Nevada'        => 'NV',
+                                                                            'New Hampshire' => 'NH',
+                                                                            'New Jersey'    => 'NJ',
+                                                                            'New Mexico'    => 'NM',
+                                                                            'New York'      => 'NY',
+                                                                            'North Carolina' => 'NC',
+                                                                            'North Dakota'  => 'ND',
+                                                                            'Ohio'          => 'OH',
+                                                                            'Oklahoma'      => 'OK',
+                                                                            'Oregon'        => 'OR',
+                                                                            'Pennsylvania'  => 'PA',
+                                                                            'Rhode Island'  => 'RI',
+                                                                            'South Carolina' => 'SC',
+                                                                            'South Dakota'  => 'SD',
+                                                                            'Tennessee'     => 'TN',
+                                                                            'Texas'         => 'TX',
+                                                                            'Utah'          => 'UT',
+                                                                            'Vermont'       => 'VT',
+                                                                            'Virginia'      => 'VA',
+                                                                            'Washington'    => 'WA',
+                                                                            'West Virgina'  => 'WV',
+                                                                            'Wisconsin'     => 'WI',
+                                                                            'Wyoming'       => 'WY');
+
+                                                            foreach($states as $key => $value) {
+
+                                                                echo "<option value='$value'>$key</option>";
+
+                                                            }
+
+                                                        ?>
+
+                                                    </select>
 
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group has-error has-feedback">
 
                                                     <label for="zip_code" class="label-control">
 
@@ -206,8 +279,8 @@
 
                                                     </label>
 
-                                                    <input type="text" class="form-control" id="zip_code"/>
-
+                                                    <input type="text" class="form-control" pattern="[0-9]*" maxlength="5" required cbx-input-validation id="zip_code"/>
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 
                                                 </div>
 
