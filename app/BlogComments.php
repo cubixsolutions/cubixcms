@@ -8,7 +8,7 @@ class BlogComments extends Model {
 
     public function blog() {
 
-        return $this->hasOne('Blog');
+        return $this->belongsTo('App\Blog');
 
     }
 }

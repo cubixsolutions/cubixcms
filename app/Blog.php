@@ -6,9 +6,13 @@ class Blog extends Model {
 
 	//
 
+    protected $table = "blogs";
+    protected $fillable = ['user_id,blog_text'];
+
+
     public function comments() {
 
-        return $this->hasMany('BlogComments');
+        return $this->hasMany('App\BlogComments');
 
 
     }

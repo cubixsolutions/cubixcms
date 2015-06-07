@@ -1,6 +1,7 @@
 <?php  namespace App\Http\Controllers; 
 
 use App\ProductCategory;
+use App\Blog;
 
 class pageController extends Controller {
 
@@ -18,7 +19,7 @@ class pageController extends Controller {
     public function index($page = 'home') {
 
         $category = ProductCategory::all();
-
+        $posts = Blog::all();
 
         if(view()->exists($page)) {
 
