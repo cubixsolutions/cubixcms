@@ -23,7 +23,7 @@
 
                     </ul>
 
-                    <div class="slide title" id="slide0">
+                    <div class="slide title">
 
                         <div class="media">
 
@@ -39,7 +39,7 @@
 
                     @foreach($categories as $row)
 
-                        <div class="slide" id="slide1">
+                        <div class="slide">
 
                             <div class="media">
 

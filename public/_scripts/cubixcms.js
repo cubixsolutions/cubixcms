@@ -242,6 +242,8 @@
 
                 };
 
+                wrapper.css({'display' : 'block'});
+
                 var t1 = new TimelineMax({onUpdate: updateSlider, onRepeat: repeatSlider});
 
                 for (var i = 0; i < totalSlides; i++) {
@@ -259,7 +261,7 @@
                 });
 
                 wrapper.append('<div id="cbx-pause">Paused</div>');
-                menu.prepend('<a href="#"><i class="fa fa-shopping-cart fa-2x"></i></a>');
+                menu.prepend('<a href="/store/"><i class="fa fa-shopping-cart fa-2x"></i></a>');
 
                 slides.css({'position': 'absolute', 'left': '0px', 'top': '0px'});
 
