@@ -17,9 +17,11 @@ class ProductCategory extends Model {
 
     public function scopeCategory($query) {
 
-        $query->get('category');
+        return $query->get();
 
     }
+
+
 
     public function is_category($id)
     {

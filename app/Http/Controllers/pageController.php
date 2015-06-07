@@ -1,5 +1,7 @@
 <?php  namespace App\Http\Controllers; 
 
+use App\ProductCategory;
+
 class pageController extends Controller {
 
     public function __construct() {
@@ -15,10 +17,12 @@ class pageController extends Controller {
      */
     public function index($page = 'home') {
 
+        $category = ProductCategory::all();
+
 
         if(view()->exists($page)) {
 
-            return view($page);
+            return view($page, ['categories' => $category]);
 
         } else {
 

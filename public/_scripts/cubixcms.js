@@ -5,18 +5,17 @@
  *  Date:    02/17/2015
  *
  */
-(function() {
+(function () {
 
 
-
-    var app = angular.module('cubixcms', [], function($interpolateProvider) {
+    var app = angular.module('cubixcms', [], function ($interpolateProvider) {
 
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
 
     });
 
-    app.directive('loadCart', function() {
+    app.directive('loadCart', function () {
 
         return {
 
@@ -30,103 +29,103 @@
 
     });
 
-    app.directive('rcSubmit', ['$parse', function($parse) {
+    app.directive('rcSubmit', ['$parse', function ($parse) {
 
-            return {
-                restrict: 'A',
-                require: ['rcSubmit', '?form'],
-                controller: ['$scope', function ($scope) {
-                    this.attempted = false;
+        return {
+            restrict: 'A',
+            require: ['rcSubmit', '?form'],
+            controller: ['$scope', function ($scope) {
+                this.attempted = false;
 
-                    var formController = null;
+                var formController = null;
 
-                    this.setAttempted = function() {
-                        this.attempted = true;
-                    };
+                this.setAttempted = function () {
+                    this.attempted = true;
+                };
 
-                    this.setFormController = function(controller) {
-                        formController = controller;
-                    };
+                this.setFormController = function (controller) {
+                    formController = controller;
+                };
 
-                    this.needsAttention = function (fieldModelController) {
-                        if (!formController) return false;
+                this.needsAttention = function (fieldModelController) {
+                    if (!formController) return false;
 
-                        if (fieldModelController) {
-                            return fieldModelController.$invalid && (fieldModelController.$dirty || this.attempted);
-                        } else {
-                            return formController && formController.$invalid && (formController.$dirty || this.attempted);
-                        }
-                    };
-                }],
-                compile: function(cElement, cAttributes, transclude) {
-                    return {
-                        pre: function(scope, formElement, attributes, controllers) {
+                    if (fieldModelController) {
+                        return fieldModelController.$invalid && (fieldModelController.$dirty || this.attempted);
+                    } else {
+                        return formController && formController.$invalid && (formController.$dirty || this.attempted);
+                    }
+                };
+            }],
+            compile: function (cElement, cAttributes, transclude) {
+                return {
+                    pre: function (scope, formElement, attributes, controllers) {
 
-                            var submitController = controllers[0];
-                            var formController = (controllers.length > 1) ? controllers[1] : null;
+                        var submitController = controllers[0];
+                        var formController = (controllers.length > 1) ? controllers[1] : null;
 
-                            submitController.setFormController(formController);
+                        submitController.setFormController(formController);
 
-                            scope.rc = scope.rc || {};
-                            scope.rc[attributes.name] = submitController;
-                        },
-                        post: function(scope, formElement, attributes, controllers) {
+                        scope.rc = scope.rc || {};
+                        scope.rc[attributes.name] = submitController;
+                    },
+                    post: function (scope, formElement, attributes, controllers) {
 
-                            var submitController = controllers[0];
-                            var formController = (controllers.length > 1) ? controllers[1] : null;
-                            var fn = $parse(attributes.rcSubmit);
+                        var submitController = controllers[0];
+                        var formController = (controllers.length > 1) ? controllers[1] : null;
+                        var fn = $parse(attributes.rcSubmit);
 
-                            formElement.bind('submit', function (event) {
-                                submitController.setAttempted();
-                                if (!scope.$$phase) scope.$apply();
+                        formElement.bind('submit', function (event) {
+                            submitController.setAttempted();
+                            if (!scope.$$phase) scope.$apply();
 
-                                if (!formController.$valid) return false;
+                            if (!formController.$valid) return false;
 
-                                scope.$apply(function() {
-                                    fn(scope, {$event:event});
-                                });
+                            scope.$apply(function () {
+                                fn(scope, {$event: event});
                             });
-                        }
-                    };
-                }
-            };
+                        });
+                    }
+                };
+            }
+        };
 
     }]);
 
-    app.directive('backButton', ['$window', function($window) {
+    app.directive('backButton', ['$window', function ($window) {
 
-       return {
+        return {
 
-           restrict: 'A',
-           scope: {
+            restrict: 'A',
+            scope: {
 
-               back: '@back'
+                back: '@back'
 
-           },
+            },
 
-           link: function(scope, element, attrs) {
+            link: function (scope, element, attrs) {
 
-               $(element[0]).on('click', function() {
+                $(element[0]).on('click', function () {
 
                     $window.history.back();
                     scope.$apply();
 
-               });
-           }
-       };
+                });
+            }
+        };
 
     }]);
 
-    app.directive('cbxCreditCardValidation', function() {
+    app.directive('cbxCreditCardValidation', function () {
 
         return {
 
             restrict: 'A',
-            link: function(scope,element) {
+            link: function (scope, element) {
 
-                element.on('keyup', function(event) {
+                element.on('keyup', function (event) {
 
-                    if(Stripe.card.validateCardNumber(element.val())) {
+                    if (Stripe.card.validateCardNumber(element.val())) {
 
                         $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
                         $(element).parent().parent().removeClass('has-error').addClass('has-success');
@@ -147,16 +146,16 @@
 
     });
 
-    app.directive('cbxCvcValidation', function() {
+    app.directive('cbxCvcValidation', function () {
 
         return {
 
             restrict: 'A',
-            link: function(scope,element) {
+            link: function (scope, element) {
 
-                element.on('keyup', function(event) {
+                element.on('keyup', function (event) {
 
-                    if(Stripe.card.validateCVC(element.val())) {
+                    if (Stripe.card.validateCVC(element.val())) {
 
                         $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
                         $(element).parent().parent().removeClass('has-error').addClass('has-success');
@@ -175,16 +174,16 @@
 
     });
 
-    app.directive('cbxInputValidation', function() {
+    app.directive('cbxInputValidation', function () {
 
         return {
 
             restrict: 'A',
-            link: function(scope,element) {
+            link: function (scope, element) {
 
-                element.on('keyup', function(event) {
+                element.on('keyup', function (event) {
 
-                    if(element.val() !== "") {
+                    if (element.val() !== "") {
 
                         $(element).parent().find('span.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
                         $(element).parent().removeClass('has-error').addClass('has-success');
@@ -205,141 +204,189 @@
 
     });
 
-    app.directive('cbxBanner', function() {
+    app.directive('cbxBanner', function () {
 
-       return {
+        return {
 
-          restrict: 'A',
-          link: function(scope,elem) {
+            restrict: 'AC',
+            link: function (scope, elem) {
 
-            var t1 = new TimelineMax();
+                var slideNumber = 0,
+                    nextSlide = 1,
+                    wrapper = $(".cbx-banner"),
+                    menu = $(".banner-controls"),
+                    slides = $(".slide"),
+                    visit_store = $(".visit_store"),
+                    totalSlides = slides.length,
+                    pauseTime = 4,
+                    duration = 1;
 
-            var slideNumber = 0,
-                nextSlide = 1,
-                menu = $(".banner-controls"),
-                slides = $(".slide"),
-                totalSlides = slides.length,
-                pauseTime = 4,
-                duration = 1;
+                updateSlider = function () {
 
-              for(var i = 0; i < totalSlides; i++) {
+                    //function that updates navigation
+                    slideNumber = t1.currentLabel();
 
-                  menu.append('<li><a href="#" class="btn btn-primary btn-sm">' + i + '</a></li>');
+                    if (t1.currentLabel() === slideNumber) {
 
-              }
+                        slideNumber = t1.currentLabel();
+                        menu.find('input[value="' + slideNumber + '"]').prop('checked', true);
 
-              elem.css({'background' : 'rgba(50,50,50,0.5)',
-                      'color' : '#ffffff',
-                      'width'   : '100%',
-                      'height' : '250px',
-                      'border' : '4px solid rgba(80,80,80,0.5)',
-                      'overflow' : 'none',
-                      'position' : 'relative',
-                      'display' : 'block'});
+                    }
 
-            elem.find('.media-heading').css({'text-shadow' : '1px 1px 5px #000'});
-            elem.find('img').each(function() {
+                };
 
-                $(this).css({'height' : '245px'});
+                repeatSlider = function () {
 
-            });
+                    slideNumber = 0;
+                    menu.find('input[value="' + slideNumber + '"]').prop('checked', true);
 
+                };
 
-              menu.css({'z-index' : '5000'});
-              slides.css({'position' : 'absolute','left' : '0px', 'top' : '0px'});
+                var t1 = new TimelineMax({onUpdate: updateSlider, onRepeat: repeatSlider});
 
-              advanceSlide = function() {
+                for (var i = 0; i < totalSlides; i++) {
 
-                  slides.each(function(slideNumber,totalSlides) {
+                    menu.append('<li style="padding-right: 5px;"><input type="radio" name="banner_ctrl" value="' + i + '"/></li>');
 
-                      t1.addLabel(slideNumber);
-                      if($(this).hasClass('title') ) {
-
-                          t1.from($(this).find('img'),duration,{opacity:0, scale:0,rotation:360,ease:Bounce.easeOut});
-                      }
-
-                      t1.from($(this).find('.media-object'),duration,{opacity:0,scale:0,ease:Bounce.easeOut});
-                      t1.from($(this).find('.media-heading'),duration,{opacity:0,scale:0, ease:Bounce.easeOut});
-                      t1.from($(this).find('.media-body h2'),duration,{opacity:0});
-                      t1.from($(this).find('.media-body a'),duration,{opacity:0});
-                      t1.addLabel(slideNumber);
-
-                      if($(this).hasClass('title') ) {
-
-                          t1.to($(this).find('img'),duration + 3,{opacity:0,scale:200}, "+=" + pauseTime);
-
-                      } else {
-
-                          t1.to($(this).find('.media-object'), duration, {opacity: 0}, "+=" + pauseTime);
-
-                      }
-
-                      t1.to($(this).find('.media-heading'),duration,{opacity:0});
-                      t1.to($(this).find('.media-body h2'),duration,{opacity:0});
-                      t1.to($(this).find('.media-body a'),duration,{opacity:0});
-                      t1.repeat(-1);
-                      console.log($(this).find('.media-object'));
+                }
 
 
-                  });
+                elem.find('.media-heading').css({'text-shadow': '1px 1px 5px #000'});
+                elem.find('img').each(function () {
+
+                    $(this).css({'height': '245px'});
+
+                });
+
+                wrapper.append('<div id="cbx-pause">Paused</div>');
+                menu.prepend('<a href="#"><i class="fa fa-shopping-cart fa-2x"></i></a>');
+
+                slides.css({'position': 'absolute', 'left': '0px', 'top': '0px'});
 
 
-              };
-
-              slides.on('mouseover', this, function() {
-
-                  t1.pause();
-
-              });
-
-              slides.on('mouseout', this, function() {
-
-                 t1.play();
-
-              });
-
-              menu.find('li a').each(function() {
-
-                  $(this).on('click',this,function() {
-
-                    //console.log($(this).text());
-                      //console.log(t1.currentLabel());
-
-                      t1.seek($(this).text());
-                  });
+                advanceSlide = function () {
 
 
-              });
-
-              // run slides
-              advanceSlide();
+                    slides.each(function (slideNumber, totalSlides) {
 
 
 
+                        //console.log(slideNumber);
+                        $(this).attr('id', 'slide-' + slideNumber);
 
-              /*
-              elem.find('.slide').each(function() {
+                        t1.set(".cbx-banner", {visibility: "visible"});
+                        if ($(this).hasClass('title')) {
 
-                t1.from(slides[slideNumber] + ' .media-object','1',{opacity:0,scale:0, ease:Bounce.easeOut});
-                t1.from(slides[slideNumber] + ' .media-heading','1',{opacity:0,scale:0, ease:Bounce.easeOut});
-                t1.from(slides[slideNumber] + '.media-body h2','1',{opacity:0});
-                t1.from(slides[slideNumber] + '.media-body a','1',{opacity:0});
-                //TweenMax.from('.media-object','1',{opacity:0,scale:0, ease:Bounce.easeOut});
-                //TweenMax.from('.media-heading','1',{opacity:0,scale:0, ease:Bounce.easeOut, delay:1.5});
-                //TweenMax.from('.media-body h2','1',{opacity:0, delay:2.5});
-                //TweenMax.from('.media-body a','1',{opacity:0,delay:3.0})
+                            t1.addLabel(slideNumber);
+                            t1.from($(this).find('img'), duration, {
+                                opacity: 0,
+                                scale: 0,
+                                rotation: 360,
+                                ease: Bounce.easeOut
+                            });
+                        }
+                        t1.addLabel(slideNumber);
+                        t1.from($(this).find('.media-object'), duration, {opacity: 0, scale: 0, ease: Bounce.easeOut});
+                        t1.from($(this).find('.media-heading'), duration, {opacity: 0, scale: 0, ease: Bounce.easeOut});
+                        t1.from($(this).find('.media-body p'), duration, {opacity: 0});
+                        t1.from($(this).find('.media-body a'), duration, {opacity: 0}, "-=2");
 
-            });
-            */
+
+                        if ($(this).hasClass('title')) {
+
+                            t1.to($(this).find('img'), duration + 3, {opacity: 0, scale: 200}, "+=" + pauseTime);
+
+                        } else {
+
+                            t1.to($(this).find('.media-object'), duration, {opacity: 0}, "+=" + pauseTime);
+
+                        }
+
+                        t1.to($(this).find('.media-heading'), duration, {opacity: 0});
+                        t1.to($(this).find('.media-body p'), duration, {opacity: 0}, "-=2");
+                        t1.to($(this).find('.media-body a'), duration, {opacity: 0}, "-=2");
+                        t1.repeat(-1);
+                        //console.log($(this).find('.media-object'));
 
 
+                    });
+                    menu.find('input[value="' + slideNumber + '"]').prop('checked', true);
 
-          }
-       };
+                };
+
+                menu.on('mouseenter', this, function (e) {
+
+                    TweenMax.fromTo(menu, 0.6, {boxShadow: "0px 0px 0px 0px red"},
+                        {boxShadow: "0px 0px 20px 2px darkred", repeat: -1, yoyo: true});
+
+                });
+
+                menu.on('mouseleave', this, function (e) {
+
+                    TweenMax.to(menu, 0.6, {boxShadow: "0px 0px 0px 0px yellow"});
+
+                });
+
+                menu.find(':input[type="radio"]').on('mouseenter', this, function (e) {
+
+                    $(this).css('cursor', 'pointer');
+
+                });
+
+                menu.find('a').on('mouseenter', this, function (e) {
+
+
+                    TweenMax.fromTo($(this).find('i'), 0.5, {rotatation: -10}, {rotation: 10, repeat: -1, yoyo: true});
+
+                });
+
+                menu.find('a').on('mouseleave', this, function (e) {
+
+                    TweenMax.to($(this).find('i'), 0.5, {rotation: 0, repeat: 0})
+
+                });
+
+                slides.on('mouseenter', this, function (e) {
+
+
+                    //console.log(this);
+                    TweenMax.to($("#cbx-pause"), 0.5, {top: 0, ease: Bounce.easeOut});
+                    t1.pause();
+
+                });
+
+                slides.on('mouseleave', this, function (e) {
+
+
+                    //console.log(this);
+                    TweenMax.to($("#cbx-pause"), 0.5, {top: -30});
+                    t1.play();
+
+                });
+
+
+                menu.find('li input').each(function () {
+
+                    $(this).on('click', this, function () {
+
+                        //console.log($(this).text());
+                        //console.log(t1.currentLabel());
+
+                        t1.seek($(this).attr('value'));
+                    });
+
+
+                });
+
+                // run slides
+                advanceSlide();
+
+            }
+        };
 
     });
 
-    app.controller('webpaymentController', ['$scope', '$http', function($scope, $http) {
+    app.controller('webpaymentController', ['$scope', '$http', function ($scope, $http) {
 
         //alert('welcome');
         $scope.session.email = "";
@@ -347,77 +394,77 @@
         $scope.ui = {};
         $scope.ui.paybutton = "Pay Now";
 
-        $scope.paynow = function() {
+        $scope.paynow = function () {
 
-           if ($("#credit_card").length) {
+            if ($("#credit_card").length) {
 
 
-               //alert('ok');
-               $("#paybutton").attr('disabled','disabled');
-               $scope.ui.paybutton = "Processing...";
-               Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
+                //alert('ok');
+                $("#paybutton").attr('disabled', 'disabled');
+                $scope.ui.paybutton = "Processing...";
+                Stripe.setPublishableKey('pk_test_0lXr7TO41jgQihh4MtyuqZpO');
 
-               Stripe.card.createToken({
-                   name: $("#name").val(),
-                   address_line1: $("#address_line1").val(),
-                   address_line2: $("#address_line2").val(),
-                   address_city: $("#city").val(),
-                   address_state: $("#state").val(),
-                   address_zip: $("#zip_code").val(),
-                   number: $('#credit_card').val(),
-                   cvc: $('#cvc').val(),
-                   exp_month: $('#exp-month').val(),
-                   exp_year: $('#exp-year').find('option:selected').text()
+                Stripe.card.createToken({
+                    name: $("#name").val(),
+                    address_line1: $("#address_line1").val(),
+                    address_line2: $("#address_line2").val(),
+                    address_city: $("#city").val(),
+                    address_state: $("#state").val(),
+                    address_zip: $("#zip_code").val(),
+                    number: $('#credit_card').val(),
+                    cvc: $('#cvc').val(),
+                    exp_month: $('#exp-month').val(),
+                    exp_year: $('#exp-year').find('option:selected').text()
 
-               }, $scope.stripeResponseHandler);
-           } else {
+                }, $scope.stripeResponseHandler);
+            } else {
 
-               /*
-                * TODO: Processes payment if customer card is already on file.
-                */
+                /*
+                 * TODO: Processes payment if customer card is already on file.
+                 */
 
                 //console.log($form);
-               $("#paybutton").attr('disabled','disabled');
-               $scope.ui.paybutton = "Processing...";
+                $("#paybutton").attr('disabled', 'disabled');
+                $scope.ui.paybutton = "Processing...";
 
-               $http({
+                $http({
 
-                   method: 'post',
-                   url:   $('#webpayment_form').attr('action'),
-                   data: {
+                    method: 'post',
+                    url: $('#webpayment_form').attr('action'),
+                    data: {
 
-                        'cardonfile' : true,
-                        '_token' : $('#_token').val(),
-                        'webpayments_token' : $("#webpayments_token").val(),
-                        'amount' : $("#amount").val()
+                        'cardonfile': true,
+                        '_token': $('#_token').val(),
+                        'webpayments_token': $("#webpayments_token").val(),
+                        'amount': $("#amount").val()
 
-                   }
+                    }
 
-               }).success(function(data,status,headers,config) {
+                }).success(function (data, status, headers, config) {
 
-                   $scope.session.email = data.email;
-                   //console.log($scope);
-                   $('#webpayment_wizard').wizard('next');
+                    $scope.session.email = data.email;
+                    //console.log($scope);
+                    $('#webpayment_wizard').wizard('next');
 
-               }).error(function(data,status,headers,config) {
+                }).error(function (data, status, headers, config) {
 
-                   $scope.ui.paybutton = "Pay Now";
-                   $("#paybutton").removeAttr('disabled');
-                   alert('Error with processing payment.')
-               });
+                    $scope.ui.paybutton = "Pay Now";
+                    $("#paybutton").removeAttr('disabled');
+                    alert('Error with processing payment.')
+                });
 
-           }
+            }
 
         };
 
-        $scope.stripeResponseHandler = function(status, response) {
+        $scope.stripeResponseHandler = function (status, response) {
 
             //console.log(response);
             var $form = $("#webpayment_form");
             $scope.ui.paybutton = "Pay Now";
             if (response.error) {
 
-                $form.find('.payment-errors').text(response.error.message).css('display','block');
+                $form.find('.payment-errors').text(response.error.message).css('display', 'block');
                 $scope.ui.paybutton = "Pay Now";
                 $("#paybutton").removeAttr('disabled');
 
@@ -425,7 +472,7 @@
             } else {
 
                 var token = response.id;
-                $form.find('.payment-errors').text('').css('display','none');
+                $form.find('.payment-errors').text('').css('display', 'none');
                 $form.append($('<input type="hidden" name="stripeToken" />').val(token));
 
                 $http({
@@ -434,10 +481,10 @@
                     url: $('#webpayment_form').attr('action'),
                     data: {
 
-                        '_token' : $('#_token').val(),
-                        'stripeToken' : token,
-                        'webpayments_token' : $("#webpayments_token").val(),
-                        'amount' : $("#amount").val()
+                        '_token': $('#_token').val(),
+                        'stripeToken': token,
+                        'webpayments_token': $("#webpayments_token").val(),
+                        'amount': $("#amount").val()
                     }
 
                 }).success(function (data, status, headers, config) {
@@ -446,23 +493,23 @@
                     $scope.ui.paybutton = 'Pay Now';
                     $("#paybutton").removeAttr('disabled');
 
-                    if(data.card_error) {
+                    if (data.card_error) {
 
-                        $form.find('.payment-errors').text(data.card_error.message).css('display','block');
+                        $form.find('.payment-errors').text(data.card_error.message).css('display', 'block');
                         $scope.ui.paybutton = "Pay Now";
                         $("#paybutton").removeAttr('disabled');
 
 
-                    } else if(data.status === 'unsuccessful') {
+                    } else if (data.status === 'unsuccessful') {
 
-                        $form.find('.payment-errors').text('There was an issue with your card.  Please contact your bank or financial institution for assistance.').css('display','block');
+                        $form.find('.payment-errors').text('There was an issue with your card.  Please contact your bank or financial institution for assistance.').css('display', 'block');
                         $scope.ui.paybutton = "Pay Now";
                         $("#paybutton").removeAttr('disabled');
 
 
-                    } else if(data.exception) {
+                    } else if (data.exception) {
 
-                        $form.find('.payment-errors').text(data.exception).css('display','block');
+                        $form.find('.payment-errors').text(data.exception).css('display', 'block');
                         $scope.ui.paybutton = "Pay Now";
                         $("#paybutton").removeAttr('disabled');
 
@@ -493,14 +540,14 @@
 
         };
 
-        $scope.next = function() {
+        $scope.next = function () {
 
-           $("#webpayment_wizard").wizard('next');
+            $("#webpayment_wizard").wizard('next');
 
 
         };
 
-        $scope.prev = function() {
+        $scope.prev = function () {
 
             $("#webpayment_wizard").wizard('previous');
 
@@ -509,11 +556,11 @@
 
     }]);
 
-    app.controller('shoppingCart', ['$scope', '$http', function($scope, $http, $localStorage, $sessionStorage, ngProgress) {
+    app.controller('shoppingCart', ['$scope', '$http', function ($scope, $http, $localStorage, $sessionStorage, ngProgress) {
 
         $('[data-toggle="popover"]').popover();
 
-        $('.description').ThreeDots({max_rows:4});
+        $('.description').ThreeDots({max_rows: 4});
 
         $scope.session = {};
         $scope.cart = {};
@@ -554,7 +601,7 @@
         });
 
 
-        $scope.changeQty = function($indicator,$rowid) {
+        $scope.changeQty = function ($indicator, $rowid) {
 
             //alert($indicator);
 
@@ -564,8 +611,8 @@
                 url: '/store/change-qty',
                 data: {
 
-                    'rowid' : $rowid,
-                    'qty'   : $indicator
+                    'rowid': $rowid,
+                    'qty': $indicator
                 }
 
             }).success(function (data, status, headers, config) {
@@ -649,7 +696,7 @@
         };
 
 
-        $scope.update = function($prod_id) {
+        $scope.update = function ($prod_id) {
 
 
             var link;
@@ -734,15 +781,15 @@
 
         };
 
-        $scope.guest_checkout = function() {
+        $scope.guest_checkout = function () {
 
-          // TODO: Guest Checkout function
+            // TODO: Guest Checkout function
 
             alert('Feature not available!');
 
         };
 
-        $scope.login = function() {
+        $scope.login = function () {
 
             // TODO:  Login function
 
@@ -750,9 +797,9 @@
 
         };
 
-        $scope.create_account = function() {
+        $scope.create_account = function () {
 
-         // TODO: Account creation function
+            // TODO: Account creation function
             //alert($scope.session.name);
             $scope.session.error = {};
             $http({
@@ -761,22 +808,22 @@
                 url: '/store/create-account',
                 data: {
 
-                    'name'                  : $scope.session.name,
-                    'email'                 : $scope.session.email,
-                    'password'              : $scope.session.password,
-                    'password_confirmation' : $scope.session.password_confirmation
+                    'name': $scope.session.name,
+                    'email': $scope.session.email,
+                    'password': $scope.session.password,
+                    'password_confirmation': $scope.session.password_confirmation
 
                 }
 
             }).success(function (data, status, headers, config) {
 
-                    alert(data.msg);
-                    $scope.session.loggedin = true;
+                alert(data.msg);
+                $scope.session.loggedin = true;
 
             }).error(function (data, status, headers, config) {
 
                 //alert(status);
-                switch(status) {
+                switch (status) {
 
                     case 422:
 
@@ -801,14 +848,10 @@
 
         };
 
-        $scope.placeOrder = function() {
-
-
+        $scope.placeOrder = function () {
 
 
         };
-
-
 
 
     }]);

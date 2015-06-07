@@ -14,7 +14,8 @@
                 <p style="color: #ffffff">Our founder, Sean Pollock, has extensive experience in computes dating back to the late 80's when he purchased his first computer and began his journey learning to program using a language called GW Basic and then went on to C and C++ and then Delphi and now he spends most of his time putting his programing skills to use developing web sites and web apps using any and all technologies at his disposal such as PHP, JavaScript, MySQL, and many many frameworks such as CodeIgniter, Laravel, WordPress, and the list goes on and on.  Sean also has a degree in Information Technology with an emphasis in Web Development.</p>
                 <p style="color: #ffffff"></p>
 
-                <div id="banner" cbx-banner>
+                <div class="cbx-banner">
+
 
                     <ul class="banner-controls">
 
@@ -36,49 +37,31 @@
 
                     </div>
 
-                    <div class="slide" id="slide1">
+                    @foreach($categories as $row)
 
-                        <div class="media">
+                        <div class="slide" id="slide1">
 
-                            <div class="media-left">
+                            <div class="media">
 
-                                <img class="media-object" src="/_assets/store/web-development.png" />
+                                <div class="media-left">
 
-                            </div>
+                                    <img class="media-object" src="/_assets/store/{{$row->image}}" />
 
-                            <div class="media-body">
+                                </div>
 
-                                <h1 class="media-heading">Web Development Packages</h1>
-                                <h2>Starting at <span class="price">$199.99</span></h2>
-                                <a href="{{url('store/category/web-development')}}" class="btn btn-primary">Visit Our Store</a>
+                                <div class="media-body">
 
-                            </div>
+                                    <h1 class="media-heading">{{$row->category}}</h1>
+                                    <p>{{$row->description}}</p>
 
-                        </div>
-
-                    </div>
-
-                    <div class="slide" id="slide2">
-
-                        <div class="media">
-
-                            <div class="media-left">
-
-                                <img class="media-object" src="/_assets/store/computer-services.png" />
-
-                            </div>
-
-                            <div class="media-body">
-
-                                <h1 class="media-heading">PC Repair Services</h1>
-                                <h2>Starting at <span class="price">$50 per hour</span></h2>
-                                <a href="{{url('store/category/web-development')}}" class="btn btn-primary">Book a Technician</a>
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
+                    @endforeach
+
 
 
                 </div>
