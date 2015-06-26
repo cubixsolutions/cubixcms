@@ -25,7 +25,6 @@
 
     <script src="/_scripts/jquery.matchHeight.js"></script>
     <script src="/_scripts/plugins/threedots/jquery.threedots.js"></script>
-    <script src="/_scripts/detectmobilebrowser.min.js"></script>
     <script src='/_scripts/cubixcms.js'></script>
 
     @yield("head")
