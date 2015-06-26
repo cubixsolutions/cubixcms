@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use App\Blog;
+use App\User;
 
 class blogController extends Controller {
 
@@ -14,7 +16,19 @@ class blogController extends Controller {
 	 */
 	public function index()
 	{
-		//
+
+        $posts = Blog::all();
+        $post_count = $posts->count();
+
+        if(view()->exists('blog')) {
+
+            return view('blog', ['posts' => $posts, 'post_count' => $post_count]);
+
+        } else {
+
+            abort('404');
+
+        }
 	}
 
 	/**

@@ -31,6 +31,10 @@
                         <p>Our current service offerings include PC Repair, Web Development, Web Hosting, Website Management, SEO Services, Printing Services and so much more. </p>
                         
                         <p>Since Cubix Solutions inception we have always had a strong workethic and have always strived for perfection in all our work.</p>
+
+                        <p>Cubix Solutions is also a member of elance.com and performs work for many clients daily.</p>
+
+
                         
                     </div>
                  
@@ -119,6 +123,8 @@
                             </a>
                         
                         </div>
+
+                        <object width="300" height="360"><param name="movie" value="https://images.elance.com/media/flash/widget/profile/profile-widget-300.swf?userId=6969246&catId=&defaultTab=0&rid=4AQVG"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="https://images.elance.com/media/flash/widget/profile/profile-widget-300.swf?userId=6969246&catId=&defaultTab=0&rid=4AQVG" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="300" height="360"></embed></object>
                         
                     </div>
                 

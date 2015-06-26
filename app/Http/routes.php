@@ -22,6 +22,7 @@
     Route::get('/', 'pageController@index');
     Route::get('/page/{page}', 'pageController@index');
 
+    Route::get('blog', 'blogController@index');
     Route::get('store', 'storeController@index');
     Route::get('store/category/{category}','storeController@category');
     Route::get('store/refresh-cart','storeController@refreshCart');
