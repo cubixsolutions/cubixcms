@@ -166,11 +166,48 @@ class storeController extends Controller {
         // TODO: make checkout routine
 
         $cart = Cart::content();
+        $recommended_products = array();
+
+        $related_product_counter = 0;
+
+        foreach($cart as $row) {
+
+            $product = Product::wheresku($row->id)->first();
+            $related_product = $product->hasRelatedProduct;
+
+            foreach($related_product as $prod) {
+
+                if(Cart::search(array('id' => $prod->sku)) == false) {
+
+                    if($related_product_counter != $prod->id) {
+
+                        $related_product_counter = $prod->id;
+                        $recommended_products[] = collect(['id'         => $prod->id,
+                                                           'image'      => $prod->image,
+                                                           'sku'        => $prod->sku,
+                                                           'product'    => $prod->product,
+                                                           'description' => $prod->description,
+                                                           'price'       => $prod->price]);
+
+                    }
+
+                }
+
+            }
+
+        }
 
         if(view()->exists('store.checkout')) {
 
+            if (Auth::check() && $related_product->count > 0) {
 
-            return view('store.checkout',array('cart' => $cart));
+                return view('store.checkout', array('cart' => $cart, 'recommended' => (empty($recommended_products) ? false : $recommended_products), 'isRelatedProduct' => $related_product));
+
+            } else {
+
+                return view('store.checkout', array('cart' => $cart, 'recommended' => (empty($recommended_products) ? false : $recommended_products), 'isRelatedProduct' => $related_product));
+
+            }
 
         } else {
 

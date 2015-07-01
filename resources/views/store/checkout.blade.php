@@ -191,7 +191,28 @@
                                 <div class="step-pane" data-step="2">
 
                                     <!-- step 2 -->
+                                    <div class="row">
 
+                                        <div class="col-md-8">
+
+                                            <div class="alert alert-info">
+
+                                                <strong>Summary:</strong>
+                                                <p>Please check your order before continueing.</p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+
+
+
+                                        </div>
+
+
+
+                                    </div>
 
                                 </div>
 

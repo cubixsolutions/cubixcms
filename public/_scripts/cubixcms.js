@@ -844,8 +844,14 @@
 
             }).success(function (data, status, headers, config) {
 
-                alert(data.msg);
+                /**
+                 * Successful login and move to next step in order process.
+                 * @type {boolean}
+                 */
+
                 $scope.session.loggedin = true;
+                $("#checkout_wizard").wizard('next');
+
 
             }).error(function (data, status, headers, config) {
 
